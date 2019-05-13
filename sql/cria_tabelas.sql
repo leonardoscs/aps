@@ -1,7 +1,5 @@
 BEGIN TRANSACTION;
 
-
--- TODO: adicionar isbn/capa?
 CREATE TABLE livro (
   id_livro          SERIAL NOT NULL,
   titulo            VARCHAR(120) NOT NULL,
@@ -14,12 +12,12 @@ CREATE TABLE livro (
 
 CREATE TABLE editora (
   id_editora    SERIAL NOT NULL,
-  nome          VARCHAR(70) NOT NULL UNIQUE -- TODO: a principio não é permitido duas editoras com EXATAMENTE o mesmo nome.
+  nome          VARCHAR(70) NOT NULL UNIQUE
 );
 
 CREATE TABLE autor (
   id_autor      SERIAL NOT NULL,
-  nome          VARCHAR(70) NOT NULL UNIQUE -- TODO: a principio não é permitido dois autores com EXATAMENTE o mesmo nome.
+  nome          VARCHAR(70) NOT NULL UNIQUE
 );
 
 CREATE TABLE exemplar_livro (
@@ -44,7 +42,7 @@ CREATE TABLE usuario (
 
 CREATE TABLE tipo_usuario (
   id_tipo              SERIAL NOT NULL,
-  descricao            VARCHAR(50) NOT NULL,
+  descricao            VARCHAR(50) NOT NULL UNIQUE,
   qtd_dias_emprestimo  SMALLINT NOT NULL
 );
 
@@ -60,7 +58,7 @@ CREATE TABLE emprestimo (
 CREATE TABLE restricao (
   id_restricao SERIAL NOT NULL,
   id_usuario   INT NOT NULL,
-  data_inicio  DATE NOT NULL, -- TODO: usar o INTERVAL do postgres? Ver como funciona
+  data_inicio  DATE NOT NULL,
   data_fim     DATE NOT NULL,
   motivo       VARCHAR(200) NOT NULL
 );
