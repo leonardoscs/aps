@@ -1,4 +1,8 @@
 ## Como executar
 
-Caso o `psql.exe` esteja localizado aqui: `"C:\Program Files\PostgreSQL\10\bin\psql.exe"` você pode simplesmente executar o `cria_tabelas.cmd`,
-caso contrário você precisará substituir `"C:\Program Files\PostgreSQL\10\bin\psql.exe"` pelo caminho do seu `psql.exe`
+Caso você não esteja usando a versão 10 do PostgreSQL, você precisará alterar o caminho do `psql`
+no arquivo `psql.cmd` que está neste diretório. 
+Exemplo: se você usa a versão 11 do Postgres, você irá alterar de `C:\Program Files\PostgreSQL\10\bin\psql.exe`
+para `C:\Program Files\PostgreSQL\11\bin\psql.exe`
+
+Execute o `setup.cmd`
