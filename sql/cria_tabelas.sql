@@ -51,7 +51,7 @@ CREATE TABLE emprestimo (
   id_usuario             INT NOT NULL, -- fk
   id_exemplar            INT NOT NULL, -- fk
   data_emprestou         DATE NOT NULL,
-  data_devolveu          DATE NOT NULL,
+  data_devolveu          DATE,
   data_limite_devolucao  DATE NOT NULL
 );
 
