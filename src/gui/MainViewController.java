@@ -50,22 +50,22 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemCadastrarUsuario() {
-		loadView("/gui/CadastrarUsuario.fxml");
+		loadView("/gui/CadastrarUsuarioView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemRemoverUsuario() {
-		System.out.println("a1");
+		loadView("/gui/RemoverUsuarioView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemCadastrarLivro() {
-		System.out.println("b");
+		loadView("/gui/CadastrarLivroView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemRemoverLivro() {
-		System.out.println("b1");
+		loadView("/gui/RemoverLivroView.fxml");
 	}
 	
 	@FXML
