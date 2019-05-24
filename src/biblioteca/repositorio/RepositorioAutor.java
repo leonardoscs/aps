@@ -5,7 +5,10 @@ import biblioteca.entidades.Autor;
 
 public interface RepositorioAutor extends Repositorio<Autor> {
 
+  // TODO: talvez adicionar paginação
   List<Autor> buscarTodos();
 
-  // TODO: talvez adicionar paginação
+  // TODO: adicinar indice
+  Autor buscarPeloNome(String nome);
+
 }

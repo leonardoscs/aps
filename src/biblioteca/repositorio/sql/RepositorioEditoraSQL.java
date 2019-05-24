@@ -85,5 +85,21 @@ public class RepositorioEditoraSQL implements RepositorioEditora {
     }
     return editoras;
   }
+
+  @Override
+  public Editora buscarPeloNome(String nome) {
+    try (PreparedStatement st = conn.prepareStatement("SELECT id_editora, nome FROM editora WHERE lower(nome) = lower(?)")) {
+      st.setString(1, nome);
+
+      ResultSet rs = st.executeQuery();
+
+      if (rs.next()) {
+        return new Editora(rs.getInt("id_editora"), rs.getString("nome"));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return null;
+  }
   
 }

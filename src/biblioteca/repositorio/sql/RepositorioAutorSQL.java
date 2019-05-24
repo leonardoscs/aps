@@ -86,4 +86,20 @@ public class RepositorioAutorSQL implements RepositorioAutor {
     return autores;
   }
 
+  @Override
+  public Autor buscarPeloNome(String nome) {
+    try (PreparedStatement st = conn.prepareStatement("SELECT id_autor, nome FROM autor WHERE lower(nome) = lower(?)")) {
+      st.setString(1, nome);
+
+      ResultSet rs = st.executeQuery();
+
+      if (rs.next()) {
+        return new Autor(rs.getInt("id_autor"), rs.getString("nome"));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return null;
+  }
+
 }
