@@ -70,32 +70,32 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemAdicionarEmprestimo() {
-		System.out.println("c");
+		loadView("/gui/AdicionarEmprestimoView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemAbaterEmprestimo() {
-		System.out.println("d");
+		loadView("/gui/AbaterEmprestimoView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemAdicionarRestricao() {
-		System.out.println("e");
+		loadView("/gui/AdicionarRestricaoView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemRemoverRestricao() {
-		System.out.println("f");
+		loadView("/gui/RemoverRestricaoView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemConsultaDeLivro() {
-		System.out.println("g");
+		loadView("/gui/ConsultarLivroView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemConsultaDeEmprestimo() {
-		System.out.println("h");
+		loadView("/gui/ConsultarEmprestimoView.fxml");
 	}
 	
 	@Override

@@ -83,7 +83,33 @@ public class RepositorioTipoUsuarioSQL implements RepositorioTipoUsuario {
     }
     return todos;
   }
+<<<<<<< HEAD
   
+=======
+
+  @Override
+  public TipoUsuario buscarPelaDescricao(String descricao) {
+    String sql =
+      "SELECT id_tipo, descricao, qtd_dias_emprestimo FROM tipo_usuario WHERE lower(descricao) = lower(?)";
+
+    try (PreparedStatement st = conn.prepareStatement(sql)) {
+      st.setString(1, descricao);
+
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+        TipoUsuario tipo = new TipoUsuario();
+        tipo.setId(rs.getInt("id_tipo"));
+        tipo.setDescricao(rs.getString("descricao"));
+        tipo.setQuantidadeDiasEmprestimo(rs.getShort("qtd_dias_emprestimo"));
+        return tipo;
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return null;
+  }
+
+>>>>>>> 582c9d30e5528d4d00f603a85f79fb025f5d02b8
   @Override
   public void atualizar(TipoUsuario tipo) {
     String sql = 
