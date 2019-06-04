@@ -83,9 +83,6 @@ public class RepositorioTipoUsuarioSQL implements RepositorioTipoUsuario {
     }
     return todos;
   }
-<<<<<<< HEAD
-  
-=======
 
   @Override
   public TipoUsuario buscarPelaDescricao(String descricao) {
@@ -109,7 +106,6 @@ public class RepositorioTipoUsuarioSQL implements RepositorioTipoUsuario {
     return null;
   }
 
->>>>>>> 582c9d30e5528d4d00f603a85f79fb025f5d02b8
   @Override
   public void atualizar(TipoUsuario tipo) {
     String sql = 
