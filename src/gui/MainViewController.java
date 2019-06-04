@@ -122,6 +122,7 @@ public class MainViewController implements Initializable{
 		
 		} catch (IOException e) {
 			Alerts.showAlert("Algo deu errado meu consagrado", null, e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 	
