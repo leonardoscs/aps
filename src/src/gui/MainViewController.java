@@ -50,52 +50,52 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemCadastrarUsuario() {
-		loadView("/gui/CadastrarUsuarioView.fxml");
+		loadView("/gui/CadastrarUsuario.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemRemoverUsuario() {
-		loadView("/gui/RemoverUsuarioView.fxml");
+		System.out.println("a1");
 	}
 	
 	@FXML
 	public void onMenuItemCadastrarLivro() {
-		loadView("/gui/CadastrarLivroView.fxml");
+		System.out.println("b");
 	}
 	
 	@FXML
 	public void onMenuItemRemoverLivro() {
-		loadView("/gui/RemoverLivroView.fxml");
+		System.out.println("b1");
 	}
 	
 	@FXML
 	public void onMenuItemAdicionarEmprestimo() {
-		loadView("/gui/AdicionarEmprestimoView.fxml");
+		System.out.println("c");
 	}
 	
 	@FXML
 	public void onMenuItemAbaterEmprestimo() {
-		loadView("/gui/AbaterEmprestimoView.fxml");
+		System.out.println("d");
 	}
 	
 	@FXML
 	public void onMenuItemAdicionarRestricao() {
-		loadView("/gui/AdicionarRestricaoView.fxml");
+		System.out.println("e");
 	}
 	
 	@FXML
 	public void onMenuItemRemoverRestricao() {
-		loadView("/gui/RemoverRestricaoView.fxml");
+		System.out.println("f");
 	}
 	
 	@FXML
 	public void onMenuItemConsultaDeLivro() {
-		loadView("/gui/ConsultarLivroView.fxml");
+		System.out.println("g");
 	}
 	
 	@FXML
 	public void onMenuItemConsultaDeEmprestimo() {
-		loadView("/gui/ConsultarEmprestimoView.fxml");
+		System.out.println("h");
 	}
 	
 	@Override

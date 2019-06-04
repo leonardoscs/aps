@@ -4,11 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import biblioteca.entidades.Autor;
-<<<<<<< HEAD
-=======
 import biblioteca.entidades.TipoUsuario;
 import biblioteca.entidades.Usuario;
->>>>>>> 582c9d30e5528d4d00f603a85f79fb025f5d02b8
 import biblioteca.repositorio.RepositorioAutor;
 import biblioteca.repositorio.RepositorioCategoria;
 import biblioteca.repositorio.RepositorioEditora;
@@ -61,8 +58,6 @@ public class Testes {
     
     System.out.println("Autor cadastrado: " + autor);
     */
-<<<<<<< HEAD
-=======
 
     /*
     // Exemplo como cadastrar um usuário.
@@ -82,6 +77,5 @@ public class Testes {
 
     repoUsuario.deletarPeloId(usuario.getId()); // Deleta usuário
     */
->>>>>>> 582c9d30e5528d4d00f603a85f79fb025f5d02b8
   }
 }
