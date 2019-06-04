@@ -103,7 +103,7 @@ public class RepositorioExemplarLivroSQL implements RepositorioExemplarLivro {
     try (PreparedStatement st = conn.prepareStatement(sql)) {  
       st.setBoolean(1, exemplar.estaDisponivel());
       st.setInt(2, exemplar.getLivro().getId());
-      st.setInt(1, exemplar.getId());
+      st.setInt(3, exemplar.getId());
 
       st.executeUpdate();
     } catch (SQLException e) {
