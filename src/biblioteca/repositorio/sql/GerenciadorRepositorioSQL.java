@@ -28,7 +28,7 @@ public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
     RepositorioTipoUsuario repoTipo = new RepositorioTipoUsuarioSQL(conn);
     RepositorioCategoria repoCat = new RepositorioCategoriaSQL(conn);
     RepositorioExemplarLivro repoExemplar = new RepositorioExemplarLivroSQL(conn, repoLivro);
-    RepositorioEmprestimo repoEmp = new RepositorioEmprestimoSQL(conn, repoExemplar);
+    RepositorioEmprestimo repoEmp = new RepositorioEmprestimoSQL(conn, repoExemplar, repoUsuario);
     
     adicionarRepositorio(repoAutor);
     adicionarRepositorio(repoEditora);

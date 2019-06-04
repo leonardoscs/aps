@@ -7,18 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import biblioteca.entidades.Emprestimo;
+import biblioteca.entidades.ExemplarLivro;
 import biblioteca.entidades.Usuario;
 import biblioteca.repositorio.RepositorioEmprestimo;
 import biblioteca.repositorio.RepositorioExemplarLivro;
+import biblioteca.repositorio.RepositorioUsuario;
 
 public class RepositorioEmprestimoSQL implements RepositorioEmprestimo {
   
   private Connection conn;
   private RepositorioExemplarLivro repoExemplarLivro;
+  private RepositorioUsuario repoUsuario;
   
-  public RepositorioEmprestimoSQL(Connection conn, RepositorioExemplarLivro repoExemplarLivro) {
+  public RepositorioEmprestimoSQL(Connection conn, RepositorioExemplarLivro repoExemplarLivro, RepositorioUsuario repoUsuario) {
     this.conn = conn;
     this.repoExemplarLivro = repoExemplarLivro;
+    this.repoUsuario = repoUsuario;
   }
 
   @Override
@@ -114,6 +118,34 @@ public class RepositorioEmprestimoSQL implements RepositorioEmprestimo {
       throw new RuntimeException(e);
     }
     return emprestimos;
+  }
+
+  @Override
+  public Emprestimo buscarEmprestimoAtivoPorExemplar(ExemplarLivro exemplar) {
+    String sql = 
+        "SELECT id_emprestimo, id_exemplar, id_usuario, data_emprestou, " + 
+        "data_devolveu, data_limite_devolucao FROM emprestimo WHERE id_exemplar = ? " +
+        "AND data_devolveu IS NULL";
+    try (PreparedStatement st = conn.prepareStatement(sql)) {
+      st.setInt(1, exemplar.getId());
+      
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+        Emprestimo emp = new Emprestimo();
+        emp.setId(rs.getInt("id_emprestimo"));
+        emp.setDataEmprestou(DateUtil.convertDateToLocalDate(rs.getDate("data_emprestou")));
+        emp.setDataDevolveu(DateUtil.convertDateToLocalDate(rs.getDate("data_devolveu")));
+        emp.setDataLimiteDevolucao(DateUtil.convertDateToLocalDate(rs.getDate("data_limite_devolucao")));
+        
+        emp.setExemplar(repoExemplarLivro.buscarPeloId(rs.getInt("id_exemplar")));
+        emp.setUsuario(repoUsuario.buscarPeloId(rs.getInt("id_usuario")));
+        
+        return emp;
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return null;
   }
 
 }
