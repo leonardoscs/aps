@@ -33,6 +33,7 @@ public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
     adicionarRepositorio(repoAutor);
     adicionarRepositorio(repoEditora);
     adicionarRepositorio(repoUsuario);
+    adicionarRepositorio(repoLivro);
     adicionarRepositorio(repoTipo);
     adicionarRepositorio(repoCat);
     adicionarRepositorio(repoExemplar);

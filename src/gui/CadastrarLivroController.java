@@ -1,86 +1,234 @@
 package gui;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
+import application.Main;
+import biblioteca.entidades.Autor;
+import biblioteca.entidades.Categoria;
+import biblioteca.entidades.Editora;
+import biblioteca.entidades.Livro;
+import biblioteca.repositorio.RepositorioAutor;
+import biblioteca.repositorio.RepositorioEditora;
+import biblioteca.repositorio.RepositorioLivro;
 import gui.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class CadastrarLivroController implements Initializable{
+public class CadastrarLivroController implements Initializable {
 	
-	int x = 0;
+  // TODO: categorias...
+  
+	@FXML
+	private TextField fieldTitulo;
 	
 	@FXML
-	private TextField titulo;
-	
-	@FXML
-	private TextField descricao;
+	private TextArea fieldDescricao;
 	 
 	@FXML
-	private TextField qtd_paginas;
+	private TextField fieldQtdPaginas;
 	
 	@FXML
-	private TextField data_publicacao;
+	private TextField fieldDataPublicacao;
 	
 	@FXML
-	private TextField localizacao;
+	private TextField fieldLocalizacao;
 	
 	@FXML
-	private TextField editora;
+	private TextField fieldEditora;
 	
 	@FXML
-	private TextField categoria;
-	
+	private TextField fieldCategoria;
+
+	// TODO:
+	// Por enquanto isso será um TextField. Para adicionar mais de um autor
+	// será necessário separar os nomes por virgula...
+	// Se der tempo, dá pra mudar pra um botão de adicionar/selecionar ou algo assim...
 	@FXML
-	private TextField autor;
+	private TextField fieldAutores;
 	
-	@FXML
-	private Button cadastrar;
+	private boolean validaCampos() {
+	  int x = 0;
+
+    if (fieldTitulo.getText().isEmpty()) {
+      x++;
+    } 
+    if (fieldDescricao.getText().isEmpty()) {
+      x++;
+    } 
+    if (fieldDataPublicacao.getText().isEmpty()) {
+      x++;
+    } 
+    if (fieldLocalizacao.getText().isEmpty()) {
+      x++;
+    } 
+    if (fieldQtdPaginas.getText().isEmpty()) {
+      x++;
+    } 
+    if (fieldEditora.getText().isEmpty()) {
+      x++;
+    }
+    /*if (fieldCategoria.getText().isEmpty()) {
+      x++;
+    }*/
+    if (fieldAutores.getText().isEmpty()) {
+      x++;
+    }
+    
+    // TODO: validar qtd paginas -> inteiro
+    // TODO: valida data publicacao -> dia/mes/ano
+    
+    if(x > 0) {
+      Alerts.showAlert("Aviso", null, "Todos os campos precisam ser preenchidos", AlertType.CONFIRMATION);
+      return false;
+    }
+    return true;
+	}
+	
+	private List<Autor> buscaOuCriaAutores(String nomes) {
+	  RepositorioAutor repoAutor = Main.getGerenciadorRepositorio().getRepositorio(RepositorioAutor.class);
+	  
+	  List<Autor> autores = new ArrayList<>();
+	  String[] nomeAutores = nomes.split(",");
+  
+    for (String nomeAutor : nomeAutores) {
+      nomeAutor = nomeAutor.trim(); // remove os espaços
+      
+      // Busca pelo nome do autor. Caso não exista, mostra um dialog
+      // para cadastrar um novo autor.
+      Autor autor = repoAutor.buscarPeloNome(nomeAutor);
+      if (autor == null) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Aviso");
+        alert.setHeaderText(null);
+        alert.setContentText(String.format("Não existe um autor chamado '%s'.\nDeseja cadastrar um novo autor com esse nome?", nomeAutor));
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().add(ButtonType.YES);
+        alert.getButtonTypes().add(ButtonType.NO);
+        
+        Optional<ButtonType> respostaOpt = alert.showAndWait();
+
+        // Se não respostar ou responder NÃO, o livro não será cadastrado.
+        if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+          continue;
+        }
+        
+        autor = new Autor(nomeAutor);
+        repoAutor.cadastrar(autor);
+      }
+      autores.add(autor);
+    }
+    
+    return autores;
+	}
 	
 	public void onBtCadastrar() {
-		if(titulo.getText().isEmpty()) {
-			x++;
-		} 
-		if(descricao.getText().isEmpty()) {
-			x++;
-		} 
-		if(data_publicacao.getText().isEmpty()) {
-			x++;
-		} 
-		if(localizacao.getText().isEmpty()) {
-			x++;
-		} 
-		if(qtd_paginas.getText().isEmpty()) {
-			x++;
-		} 
-		if(editora.getText().isEmpty()) {
-			x++;
-		}
-		if(categoria.getText().isEmpty()) {
-			x++;
-		}
-		if(autor.getText().isEmpty()) {
-			x++;
-		}
-		
-		if(x == 0) {
-			//comando para inserir dados do tipo
-			//comando para inserir dados do usuario
-			Alerts.showAlert("Aviso", null, "Livro cadastrado", AlertType.CONFIRMATION);
-		} else {
-			Alerts.showAlert("Aviso", null, "Todos os campos precisam ser preenchidos", AlertType.WARNING);
-			x = 0;
-		}
+	  if (!validaCampos()) {
+	    return;
+	  }
+	  
+	  
+	  List<Autor> autores = buscaOuCriaAutores(fieldAutores.getText());
+    Editora editora = buscaOuCriaEditora(fieldEditora.getText());
+    
+    // Se a editora é nula, significa que o usuário não a cadastrou
+    // portanto não será possível cadastrar o livro.
+    if (editora == null) {
+      return;
+    }
+	  
+    Livro livro = new Livro();
+    livro.setEditora(editora);
+    livro.setAutores(autores);
+    livro.setTitulo(fieldTitulo.getText());
+    livro.setDescricao(fieldDescricao.getText());
+    livro.setQuantidadePaginas(Integer.parseInt(fieldQtdPaginas.getText()));
+    livro.setCategorias(Collections.emptyList()); // TODO
+    livro.setLocalizacao(fieldLocalizacao.getText());
+    livro.setDataPublicacao(converterData(fieldDataPublicacao.getText()));
+    
+    Alert confirmaLivro = new Alert(AlertType.CONFIRMATION);
+    confirmaLivro.setHeaderText("Você está prestes a cadastrar o seguinte livro:");
+    confirmaLivro.setTitle("Confirme os dados.");
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("Titulo: ").append(livro.getTitulo()).append('\n');
+    sb.append("Localização: ").append(livro.getLocalizacao()).append('\n');
+    sb.append("Data de Publicação: ").append(livro.getDataPublicacao().format(DateTimeFormatter.ofPattern("dd/MM/YYYY"))).append('\n');
+    sb.append("Quantidade de Páginas: ").append(livro.getQuantidadePaginas()).append('\n');
+    sb.append("Descrição: ").append('"').append(livro.getDescricao()).append('"').append('\n');
+    sb.append("Editora: ").append(livro.getEditora().getNome()).append('\n');
+    sb.append("Autores: ").append(livro.getAutores().stream().map(Autor::getNome).collect(Collectors.joining(","))).append('\n');
+    sb.append("Categorias: ").append(livro.getCategorias().stream().map(Categoria::getNome).collect(Collectors.joining(","))).append('\n');
+    confirmaLivro.setContentText(sb.toString());
+    
+    Optional<ButtonType> respostaOpt = confirmaLivro.showAndWait();
+    if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
+      return;
+    }
+    
+    RepositorioLivro repoLivro = Main.getGerenciadorRepositorio().getRepositorio(RepositorioLivro.class);
+    
+    try {
+      repoLivro.cadastrar(livro);
+    } catch (Exception ex) {
+      Alerts.showAlert("Erro", "Ocorreu um erro ao cadastrar o livro:", ex.getMessage(), AlertType.ERROR);
+      ex.printStackTrace();
+    }
+    
+    // TODO: limpar todos os campos
+  
+		Alerts.showAlert("Aviso", null, "Livro cadastrado", AlertType.INFORMATION);
 	}
 
-	@Override
+	private LocalDate converterData(String text) {
+	  String[] partes = text.split("/");
+    return LocalDate.of(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]), Integer.parseInt(partes[0]));
+  }
+
+  private Editora buscaOuCriaEditora(String text) {
+	  RepositorioEditora repoEditora = Main.getGerenciadorRepositorio().getRepositorio(RepositorioEditora.class);
+    String nomeEditora = fieldEditora.getText();
+    Editora editora = repoEditora.buscarPeloNome(nomeEditora);
+    
+    if (editora == null) {
+      Alert alert = new Alert(AlertType.CONFIRMATION);
+      alert.setTitle("Aviso");
+      alert.setHeaderText(null);
+      alert.setContentText(String.format("Não existe uma editora chamada '%s'.\nDeseja cadastrar uma nova editora com esse nome?", nomeEditora));
+      alert.getButtonTypes().clear();
+      alert.getButtonTypes().add(ButtonType.YES);
+      alert.getButtonTypes().add(ButtonType.NO);
+      
+      Optional<ButtonType> respostaOpt = alert.showAndWait();
+
+      // Se não respostar ou responder NÃO, o livro não será cadastrado.
+      if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+        return null;
+      }
+      
+      editora = new Editora(nomeEditora);
+      repoEditora.cadastrar(editora); // TODO: usar try..catch e mostrar Alerta caso aconteça algum erro...
+    }
+
+    return editora;
+  }
+
+  @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
+	  
 	}
 	
 }
