@@ -36,7 +36,7 @@ public class AdicionarEmprestimoController {
 	  }
 	}
 	
-	public void cadastrar() {
+	private void cadastrar() {
 	  GerenciadorRepositorio repos = Main.getGerenciadorRepositorio();
 	  RepositorioUsuario repoUsuario = repos.getRepositorio(RepositorioUsuario.class);
 	  RepositorioExemplarLivro repoExemplar = repos.getRepositorio(RepositorioExemplarLivro.class);
@@ -67,6 +67,9 @@ public class AdicionarEmprestimoController {
 	    return;
 	  }
 	  
+	  DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	  LocalDate dataDevolucao = LocalDate.now().plusDays(usuario.getTipo().getQuantidadeDiasEmprestimo());
+	  
 	  Alert confirmaLivro = new Alert(AlertType.CONFIRMATION);
     confirmaLivro.setHeaderText("Você está prestes a cadastrar o seguinte emprestimo:");
     confirmaLivro.setTitle("Confirme os dados.");
@@ -75,8 +78,8 @@ public class AdicionarEmprestimoController {
     sb.append("Usuário:").append("\n");
     sb.append("  Nome: " + usuario.getNome()).append('\n');
     sb.append("  Tipo: " + usuario.getTipo().getDescricao()).append('\n');
-    sb.append('\n');
     sb.append("Titulo do livro: ").append(exemplar.getLivro().getTitulo()).append('\n');
+    sb.append("Data limite para devolução: ").append(dataDevolucao.format(df)).append('\n');
     confirmaLivro.setContentText(sb.toString());
     
     Optional<ButtonType> respostaOpt = confirmaLivro.showAndWait();
@@ -88,15 +91,14 @@ public class AdicionarEmprestimoController {
 	  emprestimo.setUsuario(usuario);
 	  emprestimo.setExemplar(exemplar);
 	  emprestimo.setDataEmprestou(LocalDate.now());
-	  emprestimo.setDataLimiteDevolucao(LocalDate.now().plusDays(usuario.getTipo().getQuantidadeDiasEmprestimo()));
+	  emprestimo.setDataLimiteDevolucao(dataDevolucao);
 	  
 	  repoEmprestimo.cadastrar(emprestimo);
 	  
 	  exemplar.setDisponivel(false);
 	  repoExemplar.atualizar(exemplar);
 	  
-	  Alerts.showAlert("Empréstimo cadastrado", null, "O usuário deve devolver o livro até o dia " + 
-	      emprestimo.getDataLimiteDevolucao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), AlertType.CONFIRMATION);
+	  Alerts.showAlert("Sucesso", null, "Emprestimo cadastrado!", AlertType.INFORMATION);
 	  
 	  // TODO: limpar campos
 	}
