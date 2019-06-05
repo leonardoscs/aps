@@ -2,21 +2,17 @@ package gui;
 
 
 import application.Main;
-import biblioteca.entidades.Emprestimo;
 import biblioteca.entidades.ExemplarLivro;
 import biblioteca.entidades.Livro;
-import biblioteca.entidades.Usuario;
 import biblioteca.repositorio.*;
 import gui.util.Alerts;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -24,7 +20,7 @@ import java.util.ResourceBundle;
 public class CadastrarExemplarController implements Initializable {
 
 	@FXML
-	private TextField inputCodLivro;
+	private TextField fieldCodLivro;
 	
 	@FXML
 	private TableView<ExemplarLivro> tabelaExemplares;
@@ -83,10 +79,10 @@ public class CadastrarExemplarController implements Initializable {
 		RepositorioExemplarLivro repoExemplar = Main.getGerenciadorRepositorio().getRepositorio(RepositorioExemplarLivro.class);
 		RepositorioLivro repoLivro = Main.getGerenciadorRepositorio().getRepositorio(RepositorioLivro.class);
 
-		Livro livro = repoLivro.buscarPeloId(Integer.parseInt(inputCodLivro.getText()));
+		Livro livro = repoLivro.buscarPeloId(Integer.parseInt(fieldCodLivro.getText()));
 
 		if (livro == null) {
-			Alerts.showAlert("Erro", null, "Não existe um livro com o código: " + inputCodLivro.getText(),
+			Alerts.showAlert("Erro", null, "Não existe um livro com o código: " + fieldCodLivro.getText(),
 				Alert.AlertType.ERROR);
 			return;
 		}
@@ -118,10 +114,10 @@ public class CadastrarExemplarController implements Initializable {
 		RepositorioExemplarLivro repoExemplar = repos.getRepositorio(RepositorioExemplarLivro.class);
 		RepositorioLivro repoLivro = repos.getRepositorio(RepositorioLivro.class);
 
-		Livro livro = repoLivro.buscarPeloId(Integer.parseInt(inputCodLivro.getText()));
+		Livro livro = repoLivro.buscarPeloId(Integer.parseInt(fieldCodLivro.getText()));
 
 		if (livro == null) {
-			Alerts.showAlert("Erro", null, "Não existe um livro com o código: " + inputCodLivro.getText(),
+			Alerts.showAlert("Erro", null, "Não existe um livro com o código: " + fieldCodLivro.getText(),
 				Alert.AlertType.ERROR);
 			return;
 		}
@@ -138,13 +134,13 @@ public class CadastrarExemplarController implements Initializable {
 	}
 
 	private boolean validaCampos() {
-		if (inputCodLivro.getText().isEmpty()) {
+		if (fieldCodLivro.getText().isEmpty()) {
 			Alerts.showAlert("Aviso", null, "Preencha o campo Código do Livro!", Alert.AlertType.WARNING);
 			return false;
 		}
 
 		try {
-			Integer.parseInt(inputCodLivro.getText());
+			Integer.parseInt(fieldCodLivro.getText());
 		} catch (NumberFormatException ex) {
 			Alerts.showAlert("Aviso", null, "O código digitado não é um número!", Alert.AlertType.WARNING);
 			return false;

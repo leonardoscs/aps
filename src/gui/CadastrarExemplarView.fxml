@@ -18,7 +18,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="inputCodLivro" layoutX="119.0" layoutY="68.0" prefHeight="22.0" prefWidth="131.0" />
+            <TextField fx:id="fieldCodLivro" layoutX="119.0" layoutY="68.0" prefHeight="22.0" prefWidth="131.0" />
             <Label layoutX="22.0" layoutY="70.0" text="Código do Livro" />
             <Button layoutX="542.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBtnRemoverSelecionado" prefHeight="22.0" prefWidth="140.0" text="Remover Selecionado" />
             <TableView fx:id="tabelaExemplares" layoutX="22.0" layoutY="103.0" prefHeight="333.0" prefWidth="660.0">

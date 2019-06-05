@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 public class ConsultarEmprestimoController implements Initializable {
 
 	@FXML
-	private TextField inputMatricula;
+	private TextField fieldMatricula;
 	
 	@FXML
 	private TableView<Emprestimo> tabelaEmprestimos;
@@ -48,10 +48,10 @@ public class ConsultarEmprestimoController implements Initializable {
 		RepositorioEmprestimo repoEmp = repos.getRepositorio(RepositorioEmprestimo.class);
 
 		// TODO: validar inputMATRICULA
-		Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(inputMatricula.getText()));
+		Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(fieldMatricula.getText()));
 
 		if (usuario == null) {
-			Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + inputMatricula.getText(),
+			Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + fieldMatricula.getText(),
 				Alert.AlertType.ERROR);
 			return;
 		}
