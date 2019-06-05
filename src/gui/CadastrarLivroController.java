@@ -9,6 +9,7 @@ import biblioteca.repositorio.RepositorioAutor;
 import biblioteca.repositorio.RepositorioEditora;
 import biblioteca.repositorio.RepositorioLivro;
 import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -162,15 +163,13 @@ public class CadastrarLivroController {
     
     try {
       repoLivro.cadastrar(livro);
+
+      Utils.limpaCamposDinamicamente(this);
+      Alerts.showAlert("Aviso", null, "Livro cadastrado", AlertType.INFORMATION);
     } catch (Exception ex) {
       Alerts.showAlert("Erro", "Ocorreu um erro ao cadastrar o livro:", ex.getMessage(), AlertType.ERROR);
       ex.printStackTrace();
-      return;
     }
-    
-    // TODO: limpar todos os campos
-  
-		Alerts.showAlert("Aviso", null, "Livro cadastrado", AlertType.INFORMATION);
 	}
 
 	private LocalDate converterData(String text) {

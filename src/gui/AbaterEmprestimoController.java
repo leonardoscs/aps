@@ -10,6 +10,7 @@ import biblioteca.repositorio.GerenciadorRepositorio;
 import biblioteca.repositorio.RepositorioEmprestimo;
 import biblioteca.repositorio.RepositorioExemplarLivro;
 import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
@@ -17,10 +18,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 public class AbaterEmprestimoController {
-
-  // TODO: acho que isso pode ser removido. Só o código do exemplar já basta.
-  @FXML
-  private TextField matricula;
 
   @FXML
   private TextField codigoExemplar;
@@ -83,8 +80,8 @@ public class AbaterEmprestimoController {
     repoExemplar.atualizar(exemplar);
     
     Alerts.showAlert("Sucesso", null, "Emprestimo abatido.", AlertType.INFORMATION);
-    
-    // TODO: limpar campos
+
+    Utils.limpaCamposDinamicamente(this);
   }
 
 }

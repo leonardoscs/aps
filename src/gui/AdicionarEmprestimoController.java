@@ -13,6 +13,7 @@ import biblioteca.repositorio.RepositorioEmprestimo;
 import biblioteca.repositorio.RepositorioExemplarLivro;
 import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -99,8 +100,8 @@ public class AdicionarEmprestimoController {
 	  repoExemplar.atualizar(exemplar);
 	  
 	  Alerts.showAlert("Sucesso", null, "Emprestimo cadastrado!", AlertType.INFORMATION);
-	  
-	  // TODO: limpar campos
+
+		Utils.limpaCamposDinamicamente(this);
 	}
 	
 }

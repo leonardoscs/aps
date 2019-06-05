@@ -13,6 +13,7 @@ import biblioteca.entidades.Usuario;
 import biblioteca.repositorio.RepositorioTipoUsuario;
 import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -38,9 +39,6 @@ public class CadastrarUsuarioController implements Initializable{
 	
 	@FXML
 	private ChoiceBox<TipoUsuario> tipo;
-	
-	@FXML
-	private Button cadastrar;
 	
 	@FXML
 	private Label semNome;
@@ -122,13 +120,8 @@ public class CadastrarUsuarioController implements Initializable{
       repoUsuario.cadastrar(usuario);
       
       Alerts.showAlert("Aviso", null, "Usuário cadastrado com sucesso", AlertType.INFORMATION);
-      
-      // Limpa os campos após cadastrar (TODO: talvez redirecionar para outra 'página'?)
-      nome.setText("");
-      email.setText("");
-      matricula.setText("");
-      telefone.setText("");
-      tipo.getSelectionModel().clearSelection();
+
+      Utils.limpaCamposDinamicamente(this);
     } catch (Exception ex) {
       Alerts.showAlert("Erro", "Ocorreu um erro ao cadastrar o usuário", ex.getMessage(), AlertType.ERROR);
     }
