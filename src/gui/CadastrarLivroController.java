@@ -10,11 +10,8 @@ import biblioteca.repositorio.RepositorioEditora;
 import biblioteca.repositorio.RepositorioLivro;
 import gui.util.Alerts;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,40 +54,25 @@ public class CadastrarLivroController {
 	private TextField fieldAutores;
 	
 	private boolean validaCampos() {
-	  int x = 0;
+	  Control[] campos = {
+	    fieldTitulo, fieldDescricao, fieldDataPublicacao, fieldLocalizacao,
+      fieldQtdPaginas, fieldEditora, fieldAutores
+    };
 
-    if (fieldTitulo.getText().isEmpty()) {
-      x++;
-    } 
-    if (fieldDescricao.getText().isEmpty()) {
-      x++;
-    } 
-    if (fieldDataPublicacao.getText().isEmpty()) {
-      x++;
-    } 
-    if (fieldLocalizacao.getText().isEmpty()) {
-      x++;
-    } 
-    if (fieldQtdPaginas.getText().isEmpty()) {
-      x++;
-    } 
-    if (fieldEditora.getText().isEmpty()) {
-      x++;
+	  for (Control campo : campos) {
+	    String valor = (campo instanceof TextArea)
+        ? ((TextArea) campo).getText()
+        : ((TextField) campo).getText();
+
+	    if (valor.isEmpty()) {
+        Alerts.showAlert("Aviso", null, "Todos os campos precisam ser preenchidos", AlertType.CONFIRMATION);
+        return false;
+      }
     }
-    /*if (fieldCategoria.getText().isEmpty()) {
-      x++;
-    }*/
-    if (fieldAutores.getText().isEmpty()) {
-      x++;
-    }
-    
+
     // TODO: validar qtd paginas -> inteiro
     // TODO: valida data publicacao -> dia/mes/ano
-    
-    if(x > 0) {
-      Alerts.showAlert("Aviso", null, "Todos os campos precisam ser preenchidos", AlertType.CONFIRMATION);
-      return false;
-    }
+
     return true;
 	}
 	
