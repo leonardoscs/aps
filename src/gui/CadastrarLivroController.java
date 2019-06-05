@@ -1,15 +1,5 @@
 package gui;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
 import application.Main;
 import biblioteca.entidades.Autor;
 import biblioteca.entidades.Categoria;
@@ -20,14 +10,21 @@ import biblioteca.repositorio.RepositorioEditora;
 import biblioteca.repositorio.RepositorioLivro;
 import gui.util.Alerts;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class CadastrarLivroController implements Initializable {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+public class CadastrarLivroController {
 	
   // TODO: categorias...
   
@@ -186,6 +183,7 @@ public class CadastrarLivroController implements Initializable {
     } catch (Exception ex) {
       Alerts.showAlert("Erro", "Ocorreu um erro ao cadastrar o livro:", ex.getMessage(), AlertType.ERROR);
       ex.printStackTrace();
+      return;
     }
     
     // TODO: limpar todos os campos
@@ -214,7 +212,7 @@ public class CadastrarLivroController implements Initializable {
       
       Optional<ButtonType> respostaOpt = alert.showAndWait();
 
-      // Se não respostar ou responder NÃO, o livro não será cadastrado.
+      // Se não responder ou responder NÃO, o livro não será cadastrado.
       if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
         return null;
       }
@@ -225,10 +223,5 @@ public class CadastrarLivroController implements Initializable {
 
     return editora;
   }
-
-  @Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-	  
-	}
 	
 }
