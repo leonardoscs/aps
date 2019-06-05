@@ -3,15 +3,7 @@ package biblioteca.repositorio.sql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import biblioteca.repositorio.GerenciadorRepositorio;
-import biblioteca.repositorio.RepositorioAutor;
-import biblioteca.repositorio.RepositorioCategoria;
-import biblioteca.repositorio.RepositorioEditora;
-import biblioteca.repositorio.RepositorioEmprestimo;
-import biblioteca.repositorio.RepositorioExemplarLivro;
-import biblioteca.repositorio.RepositorioLivro;
-import biblioteca.repositorio.RepositorioTipoUsuario;
-import biblioteca.repositorio.RepositorioUsuario;
+import biblioteca.repositorio.*;
 
 public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
 
@@ -29,6 +21,7 @@ public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
     RepositorioCategoria repoCat = new RepositorioCategoriaSQL(conn);
     RepositorioExemplarLivro repoExemplar = new RepositorioExemplarLivroSQL(conn, repoLivro);
     RepositorioEmprestimo repoEmp = new RepositorioEmprestimoSQL(conn, repoExemplar, repoUsuario);
+    RepositorioRestricao repoRestricao = new RepositorioRestricaoSQL(conn);
     
     adicionarRepositorio(repoAutor);
     adicionarRepositorio(repoEditora);
@@ -38,6 +31,7 @@ public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
     adicionarRepositorio(repoCat);
     adicionarRepositorio(repoExemplar);
     adicionarRepositorio(repoEmp);
+    adicionarRepositorio(repoRestricao);
   }
 
 }
