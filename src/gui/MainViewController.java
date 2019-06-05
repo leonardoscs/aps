@@ -97,6 +97,10 @@ public class MainViewController implements Initializable{
 	public void onMenuItemConsultaDeEmprestimo() {
 		loadView("/gui/ConsultarEmprestimoView.fxml");
 	}
+
+	public void onMenuItemCadastrarExemplar() {
+	  loadView("/gui/CadastrarExemplarView.fxml");
+	}
 	
 	@Override
 	public void initialize(URL uri, ResourceBundle rb) {
@@ -119,7 +123,6 @@ public class MainViewController implements Initializable{
 			mainVBox.getChildren().add(mainMenu);
 			
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-		
 		} catch (IOException e) {
 			Alerts.showAlert("Algo deu errado meu consagrado", null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();

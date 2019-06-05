@@ -21,6 +21,7 @@
                   <Menu mnemonicParsing="false" text="Livros">
                     <items>
                       <MenuItem fx:id="menuItemCadastrarLivro" mnemonicParsing="false" onAction="#onMenuItemCadastrarLivro" text="Adicionar livro" />
+                      <MenuItem fx:id="menuItemCadastrarExemplar" mnemonicParsing="false" onAction="#onMenuItemCadastrarExemplar" text="Adicionar exemplar" />
                         <MenuItem fx:id="menuItemRemoverLivro" mnemonicParsing="false" onAction="#onMenuItemRemoverLivro" text="Remover livro" />
                     </items>
                   </Menu>
