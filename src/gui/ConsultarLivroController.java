@@ -16,8 +16,8 @@ public class ConsultarLivroController {
 	
 	public void onBtConsultar() {
 		//comandos
-		Alerts.showAlert("Aviso", null, "Livro disponÌvel", AlertType.CONFIRMATION);
-		Alerts.showAlert("Aviso", null, "O livro n„o est· disponÌvel", AlertType.WARNING);
+		Alerts.showAlert("Aviso", null, "Livro dispon√≠vel", AlertType.CONFIRMATION);
+		Alerts.showAlert("Aviso", null, "O livro n√£o est√° dispon√≠vel", AlertType.WARNING);
 	}
 	
 }

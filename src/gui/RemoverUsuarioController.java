@@ -20,13 +20,13 @@ public class RemoverUsuarioController {
 	@FXML
 	private void onBtRemover() {
 		if(nome.getText().isEmpty() && matricula.getText().isEmpty()) {
-			Alerts.showAlert("Aviso", null, "… preciso prencher pelo menos um dos campos", AlertType.ERROR);
+			Alerts.showAlert("Aviso", null, "√â preciso prencher pelo menos um dos campos", AlertType.ERROR);
 		} else if(nome.getText().isEmpty()){
 			//remover por matricula
-			Alerts.showAlert("Aviso", null, "Usu·rio removido", AlertType.CONFIRMATION);
+			Alerts.showAlert("Aviso", null, "Usu√°rio removido", AlertType.CONFIRMATION);
 		} else if(matricula.getText().isEmpty()) {
 			//remover por nome
-			Alerts.showAlert("Aviso", null, "Usu·rio removido", AlertType.CONFIRMATION);
+			Alerts.showAlert("Aviso", null, "Usu√°rio removido", AlertType.CONFIRMATION);
 		}
 	}
 	

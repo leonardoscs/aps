@@ -19,7 +19,7 @@ public class RemoverRestricaoController {
 	
 	public void onBtRemoverRestricao() {
 		//comandos para remover a restricao do BD
-		Alerts.showAlert("Aviso", null, "Restrição removida com sucesso", AlertType.CONFIRMATION);
+		Alerts.showAlert("Aviso", null, "RestriÃ§Ã£o removida com sucesso", AlertType.CONFIRMATION);
 	}
 	
 }
