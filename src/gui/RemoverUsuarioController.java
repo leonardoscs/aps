@@ -4,6 +4,8 @@ import application.Main;
 import biblioteca.entidades.Usuario;
 import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -51,19 +53,13 @@ public class RemoverUsuarioController {
 	}
 
 	private boolean validaCampos() {
-		if (fieldMatricula.getText().isEmpty()) {
-			Alerts.showAlert("Aviso", null, "Preencha o campo Matrícula!", Alert.AlertType.WARNING);
-			return false;
-		}
-
 		try {
-			Long.parseLong(fieldMatricula.getText());
-		} catch (NumberFormatException ex) {
-			Alerts.showAlert("Aviso", null, "A matrícula digitada não é um número!", Alert.AlertType.WARNING);
+			ValidadorCampo.valida(fieldMatricula, "Matrícula", Validadores.NAO_VAZIO, Validadores.NUMERO_LONG);
+			return true;
+		} catch (RuntimeException ex) {
+			Alerts.showAlert("Aviso", null, ex.getMessage(), Alert.AlertType.WARNING);
 			return false;
 		}
-
-		return true;
 	}
 	
 }
