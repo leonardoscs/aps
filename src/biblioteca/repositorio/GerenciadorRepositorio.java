@@ -24,7 +24,7 @@ public abstract class GerenciadorRepositorio {
     // Cadastra pela classe da interface, não a da implementação.
     // Por exemplo, RepositorioUsuario ao invés de RepositorioUsuarioSQL.
     Class<?> classeRepositorio = Arrays.stream(repo.getClass().getInterfaces())
-        .filter(c -> Repositorio.class.isAssignableFrom(c))
+        .filter(Repositorio.class::isAssignableFrom)
         .findFirst().get();
     
     repositorios.put(classeRepositorio, repo);

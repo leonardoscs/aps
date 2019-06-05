@@ -38,8 +38,6 @@ public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
     adicionarRepositorio(repoCat);
     adicionarRepositorio(repoExemplar);
     adicionarRepositorio(repoEmp);
-    
-    System.out.println(getRepositorio(RepositorioTipoUsuario.class));
   }
 
 }
