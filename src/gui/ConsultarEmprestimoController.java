@@ -8,6 +8,8 @@ import biblioteca.repositorio.GerenciadorRepositorio;
 import biblioteca.repositorio.RepositorioEmprestimo;
 import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -43,11 +45,14 @@ public class ConsultarEmprestimoController implements Initializable {
   private TableColumn<Emprestimo, String> dataDevolucaoCol;
 
 	public void onBtConsultar() {
+		if (!validaCampos()) {
+			return;
+		}
+
 		GerenciadorRepositorio repos = Main.getGerenciadorRepositorio();
 		RepositorioUsuario repoUsuario = repos.getRepositorio(RepositorioUsuario.class);
 		RepositorioEmprestimo repoEmp = repos.getRepositorio(RepositorioEmprestimo.class);
 
-		// TODO: validar inputMATRICULA
 		Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(fieldMatricula.getText()));
 
 		if (usuario == null) {
@@ -66,6 +71,15 @@ public class ConsultarEmprestimoController implements Initializable {
 		tabelaEmprestimos.setItems(FXCollections.observableArrayList(emprestimos));
 	}
 
+	private boolean validaCampos() {
+		try {
+			ValidadorCampo.valida(fieldMatricula, "Matrícula", Validadores.NAO_VAZIO, Validadores.NUMERO_LONG);
+			return true;
+		} catch (RuntimeException ex) {
+			Alerts.showAlert("Aviso", null, ex.getMessage(), Alert.AlertType.WARNING);
+			return false;
+		}
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

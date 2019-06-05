@@ -18,8 +18,8 @@
             </Label>
             <Label layoutX="23.0" layoutY="213.0" text="Código do exemplar" />
             <Label layoutX="74.0" layoutY="117.0" text="Matrícula" />
-            <TextField fx:id="codigoExemplar" layoutX="143.0" layoutY="209.0" />
-            <TextField fx:id="matriculaUsuario" layoutX="143.0" layoutY="113.0" />
+            <TextField fx:id="fieldCodExemplar" layoutX="143.0" layoutY="209.0" />
+            <TextField fx:id="fieldMatricula" layoutX="143.0" layoutY="113.0" />
             <Button fx:id="cadastrarEmprestimo" layoutX="195.0" layoutY="329.0" mnemonicParsing="false" onAction="#onBtCadastrarEmprestimo" text="Adicionar empréstimo" />
          </children>
       </AnchorPane>

@@ -11,6 +11,8 @@ import biblioteca.repositorio.RepositorioEmprestimo;
 import biblioteca.repositorio.RepositorioExemplarLivro;
 import gui.util.Alerts;
 import gui.util.Utils;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
@@ -20,7 +22,7 @@ import javafx.scene.control.TextField;
 public class AbaterEmprestimoController {
 
   @FXML
-  private TextField codigoExemplar;
+  private TextField fieldCodExemplar;
 
   public void onBtAbaterEmprestimo() {
     try {
@@ -32,16 +34,18 @@ public class AbaterEmprestimoController {
   }
   
   private void abaterEmprestimo() {
+    if (!validaCampos()) {
+      return;
+    }
+
     GerenciadorRepositorio repos = Main.getGerenciadorRepositorio();
     RepositorioExemplarLivro repoExemplar = repos.getRepositorio(RepositorioExemplarLivro.class);
     RepositorioEmprestimo repoEmprestimo = repos.getRepositorio(RepositorioEmprestimo.class);
-    
-    // TODO: validar codigoExemplar
-    
-    ExemplarLivro exemplar = repoExemplar.buscarPeloId(Integer.parseInt(codigoExemplar.getText()));
+
+    ExemplarLivro exemplar = repoExemplar.buscarPeloId(Integer.parseInt(fieldCodExemplar.getText()));
     
     if (exemplar == null) {
-      Alerts.showAlert("Erro", null, "Não existe um exemplar com o código: " + codigoExemplar.getText(), 
+      Alerts.showAlert("Erro", null, "Não existe um exemplar com o código: " + fieldCodExemplar.getText(),
           AlertType.ERROR);
       return;
     }
@@ -84,4 +88,13 @@ public class AbaterEmprestimoController {
     Utils.limpaCamposDinamicamente(this);
   }
 
+  private boolean validaCampos() {
+    try {
+      ValidadorCampo.valida(fieldCodExemplar, "Código do Exemplar", Validadores.NAO_VAZIO, Validadores.NUMERO_INT);
+      return true;
+    } catch (RuntimeException ex) {
+      Alerts.showAlert("Aviso", null, ex.getMessage(), AlertType.WARNING);
+      return false;
+    }
+  }
 }

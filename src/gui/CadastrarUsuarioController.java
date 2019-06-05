@@ -14,13 +14,12 @@ import biblioteca.repositorio.RepositorioTipoUsuario;
 import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
 import gui.util.Utils;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
 public class CadastrarUsuarioController implements Initializable{
@@ -39,62 +38,20 @@ public class CadastrarUsuarioController implements Initializable{
 	
 	@FXML
 	private ChoiceBox<TipoUsuario> tipo;
-	
-	@FXML
-	private Label semNome;
-	
-	@FXML
-	private Label semTipo;
-	
-	@FXML
-	private Label semEmail;
-	
-	@FXML
-	private Label semMatricula;
-	
-	@FXML
-	private Label semTelefone;
-	
-	private boolean validaCampos() {
-	  boolean valido = true;
 
-	  // Limpa texto das labels...
-	  semNome.setText("");
-    semTipo.setText("");
-    semEmail.setText("");
-    semMatricula.setText("");
-    semTelefone.setText("");
-    
-	  if (matricula.getText().isEmpty()) {
-      semMatricula.setText("Campo matricula não pode estar vazio");
-      valido = false;
-    }
-    if (tipo.getSelectionModel().getSelectedItem() == null) {
-      semTipo.setText("Campo tipo não pode estar vazio.");
-      valido = false;
-    } 
-    if (telefone.getText().isEmpty()) {
-      semTelefone.setText("Campo telefone não pode estar vazio");
-      valido = false;
-    }
-    if (nome.getText().isEmpty()) {
-      semNome.setText("Campo nome não pode estar vazio");
-      valido = false;
-    } 
-    if (email.getText().isEmpty()) {
-      semEmail.setText("Campo email não pode estar vazio");
-      valido = false;
-    }
-
+  private boolean validaCampos() {
     try {
-      Long.parseLong(matricula.getText());
-    } catch (NumberFormatException x) {
-      semMatricula.setText("Campo matricula não é um número válido.");
-      valido = false;
+      ValidadorCampo.valida(nome, "Nome", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(telefone, "Telefone", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(matricula, "Matrícula", Validadores.NAO_VAZIO, Validadores.NUMERO_LONG);
+      ValidadorCampo.valida(tipo, "Tipo Usuário", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(email, "Email", Validadores.NAO_VAZIO);
+      return true;
+    } catch (RuntimeException ex) {
+      Alerts.showAlert("Aviso", null, ex.getMessage(), Alert.AlertType.WARNING);
+      return false;
     }
-    
-    return valido;
-	}
+  }
 	
 	// TODO: criar view para cadastrar/remover Tipos de Usuario
 	

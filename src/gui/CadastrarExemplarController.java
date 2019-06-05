@@ -6,6 +6,8 @@ import biblioteca.entidades.ExemplarLivro;
 import biblioteca.entidades.Livro;
 import biblioteca.repositorio.*;
 import gui.util.Alerts;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -134,18 +136,12 @@ public class CadastrarExemplarController implements Initializable {
 	}
 
 	private boolean validaCampos() {
-		if (fieldCodLivro.getText().isEmpty()) {
-			Alerts.showAlert("Aviso", null, "Preencha o campo Código do Livro!", Alert.AlertType.WARNING);
-			return false;
-		}
-
 		try {
-			Integer.parseInt(fieldCodLivro.getText());
-		} catch (NumberFormatException ex) {
-			Alerts.showAlert("Aviso", null, "O código digitado não é um número!", Alert.AlertType.WARNING);
+			ValidadorCampo.valida(fieldCodLivro, "Código do Livro", Validadores.NAO_VAZIO, Validadores.NUMERO_INT);
+			return true;
+		} catch (RuntimeException ex) {
+			Alerts.showAlert("Aviso", null, ex.getMessage(), Alert.AlertType.WARNING);
 			return false;
 		}
-
-		return true;
 	}
 }

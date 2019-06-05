@@ -14,6 +14,8 @@ import biblioteca.repositorio.RepositorioExemplarLivro;
 import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
 import gui.util.Utils;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -23,10 +25,10 @@ import javafx.scene.control.TextField;
 public class AdicionarEmprestimoController {
 
 	@FXML
-	private TextField matriculaUsuario;
+	private TextField fieldMatricula;
 	
 	@FXML
-	private TextField codigoExemplar;
+	private TextField fieldCodExemplar;
 	
 	public void onBtCadastrarEmprestimo() {
 	  try {
@@ -38,32 +40,34 @@ public class AdicionarEmprestimoController {
 	}
 	
 	private void cadastrar() {
+		if (!validaCampos()) {
+			return;
+		}
+
 	  GerenciadorRepositorio repos = Main.getGerenciadorRepositorio();
 	  RepositorioUsuario repoUsuario = repos.getRepositorio(RepositorioUsuario.class);
 	  RepositorioExemplarLivro repoExemplar = repos.getRepositorio(RepositorioExemplarLivro.class);
 	  RepositorioEmprestimo repoEmprestimo = repos.getRepositorio(RepositorioEmprestimo.class);
 	  
-	  // TODO: validar matricula/codigoexemplar Long.parseLong
-	  
-	  Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(matriculaUsuario.getText()));
+	  Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(fieldMatricula.getText()));
 	  
 	  if (usuario == null) {
-	    Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + matriculaUsuario.getText(), 
+	    Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + fieldMatricula.getText(),
 	        AlertType.ERROR);
 	    return;
 	  }
 	  
-	  ExemplarLivro exemplar = repoExemplar.buscarPeloId(Integer.parseInt(codigoExemplar.getText()));
+	  ExemplarLivro exemplar = repoExemplar.buscarPeloId(Integer.parseInt(fieldCodExemplar.getText()));
 	  
 	  if (exemplar == null) {
-	    Alerts.showAlert("Erro", null, "Não existe um exemplar com o código: " + codigoExemplar.getText(), 
+	    Alerts.showAlert("Erro", null, "Não existe um exemplar com o código: " + fieldCodExemplar.getText(),
           AlertType.ERROR);
       return;
 	  }
 	  
 	  if (!exemplar.estaDisponivel()) {
 	    // TODO: informar a data que estará disponivel??
-	    Alerts.showAlert("Erro", null, "O exemplar com o código " + codigoExemplar.getText() + " não está disponível!", 
+	    Alerts.showAlert("Erro", null, "O exemplar com o código " + fieldCodExemplar.getText() + " não está disponível!",
           AlertType.ERROR);
 	    return;
 	  }
@@ -75,13 +79,12 @@ public class AdicionarEmprestimoController {
     confirmaLivro.setHeaderText("Você está prestes a cadastrar o seguinte emprestimo:");
     confirmaLivro.setTitle("Confirme os dados.");
 
-    StringBuilder sb = new StringBuilder();
-    sb.append("Usuário:").append("\n");
-    sb.append("  Nome: " + usuario.getNome()).append('\n');
-    sb.append("  Tipo: " + usuario.getTipo().getDescricao()).append('\n');
-    sb.append("Titulo do livro: ").append(exemplar.getLivro().getTitulo()).append('\n');
-    sb.append("Data limite para devolução: ").append(dataDevolucao.format(df)).append('\n');
-    confirmaLivro.setContentText(sb.toString());
+		String sb = "Usuário:" + "\n" +
+			"  Nome: " + usuario.getNome() + '\n' +
+			"  Tipo: " + usuario.getTipo().getDescricao() + '\n' +
+			"Titulo do livro: " + exemplar.getLivro().getTitulo() + '\n' +
+			"Data limite para devolução: " + dataDevolucao.format(df) + '\n';
+		confirmaLivro.setContentText(sb);
     
     Optional<ButtonType> respostaOpt = confirmaLivro.showAndWait();
     if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
@@ -103,5 +106,15 @@ public class AdicionarEmprestimoController {
 
 		Utils.limpaCamposDinamicamente(this);
 	}
-	
+
+	private boolean validaCampos() {
+		try {
+			ValidadorCampo.valida(fieldMatricula, "Matrícula", Validadores.NAO_VAZIO, Validadores.NUMERO_LONG);
+			ValidadorCampo.valida(fieldCodExemplar, "Código do Exemplar", Validadores.NAO_VAZIO, Validadores.NUMERO_INT);
+			return true;
+		} catch (RuntimeException ex) {
+			Alerts.showAlert("Aviso", null, ex.getMessage(), AlertType.WARNING);
+			return false;
+		}
+	}
 }

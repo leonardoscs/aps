@@ -10,6 +10,8 @@ import biblioteca.repositorio.RepositorioEditora;
 import biblioteca.repositorio.RepositorioLivro;
 import gui.util.Alerts;
 import gui.util.Utils;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -53,29 +55,23 @@ public class CadastrarLivroController {
 	// Se der tempo, dá pra mudar pra um botão de adicionar/selecionar ou algo assim...
 	@FXML
 	private TextField fieldAutores;
-	
-	private boolean validaCampos() {
-	  Control[] campos = {
-	    fieldTitulo, fieldDescricao, fieldDataPublicacao, fieldLocalizacao,
-      fieldQtdPaginas, fieldEditora, fieldAutores
-    };
 
-	  for (Control campo : campos) {
-	    String valor = (campo instanceof TextArea)
-        ? ((TextArea) campo).getText()
-        : ((TextField) campo).getText();
+  private boolean validaCampos() {
+    try {
+      ValidadorCampo.valida(fieldTitulo, "Título", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(fieldDescricao, "Descrição", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(fieldDataPublicacao, "Data Publicação", Validadores.NAO_VAZIO, Validadores.DATA);
+      ValidadorCampo.valida(fieldLocalizacao, "Localização", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(fieldQtdPaginas, "Número de Páginas", Validadores.NAO_VAZIO, Validadores.NUMERO_INT);
+      ValidadorCampo.valida(fieldEditora, "Editora", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(fieldAutores, "Autores", Validadores.NAO_VAZIO);
 
-	    if (valor.isEmpty()) {
-        Alerts.showAlert("Aviso", null, "Todos os campos precisam ser preenchidos", AlertType.CONFIRMATION);
-        return false;
-      }
+      return true;
+    } catch (RuntimeException ex) {
+      Alerts.showAlert("Aviso", null, ex.getMessage(), Alert.AlertType.WARNING);
+      return false;
     }
-
-    // TODO: validar qtd paginas -> inteiro
-    // TODO: valida data publicacao -> dia/mes/ano
-
-    return true;
-	}
+  }
 	
 	private List<Autor> buscaOuCriaAutores(String nomes) {
 	  RepositorioAutor repoAutor = Main.getGerenciadorRepositorio().getRepositorio(RepositorioAutor.class);
