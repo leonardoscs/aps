@@ -29,7 +29,6 @@ public class Utils {
 		Arrays.stream(fields)
 			.filter(f -> f.isAnnotationPresent(FXML.class))
 			.map(f -> {
-				System.out.println(f);
 				try {
 					f.setAccessible(true);
 					return f.get(obj);
