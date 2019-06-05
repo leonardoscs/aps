@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/gui/AbaterEmprestimoController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/AdicionarEmprestimoController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/CadastrarLivroController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/CadastrarUsuarioController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/ConsultarEmprestimoController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/ConsultarLivroController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/MainViewController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/RemoverLivroController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/RemoverRestricaoController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/RemoverUsuarioController.java" charset="UTF-8" />
+  </component>
+</project>
