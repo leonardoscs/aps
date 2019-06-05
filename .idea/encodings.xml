@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/gui/AbaterEmprestimoController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/gui/AdicionarEmprestimoController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/gui/AdicionarRestricaoController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/gui/CadastrarLivroController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/gui/CadastrarUsuarioController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/gui/ConsultarEmprestimoController.java" charset="UTF-8" />
