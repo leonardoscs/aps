@@ -19,9 +19,9 @@
             <Label layoutX="65.0" layoutY="106.0" text="Matricula:" />
             <Label layoutX="9.0" layoutY="165.0" text="Término da restrição:" />
             <Label layoutX="80.0" layoutY="227.0" text="Motivo:" />
-            <TextField fx:id="matricula" layoutX="125.0" layoutY="102.0" />
-            <TextField fx:id="dataFim" layoutX="125.0" layoutY="161.0" />
-            <TextField fx:id="motivo" layoutX="125.0" layoutY="223.0" />
+            <TextField fx:id="fieldMatricula" layoutX="125.0" layoutY="102.0" />
+            <TextField fx:id="fieldDataFim" layoutX="125.0" layoutY="161.0" />
+            <TextField fx:id="fieldMotivo" layoutX="125.0" layoutY="223.0" />
             <Button fx:id="adicionarRestricao" layoutX="216.0" layoutY="293.0" mnemonicParsing="false" onAction="#onBtAdicionarRestricao" text="Adicionar restrição" />
          </children>
       </AnchorPane>

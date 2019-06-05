@@ -1,37 +1,101 @@
 package gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import application.Main;
+import biblioteca.entidades.Restricao;
+import biblioteca.entidades.Usuario;
+import biblioteca.repositorio.GerenciadorRepositorio;
+import biblioteca.repositorio.RepositorioRestricao;
+import biblioteca.repositorio.RepositorioUsuario;
 import gui.util.Alerts;
+import gui.util.Utils;
+import gui.validador.ValidadorCampo;
+import gui.validador.Validadores;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
-public class AdicionarRestricaoController implements Initializable {
+import java.time.LocalDate;
+import java.util.Optional;
+
+public class AdicionarRestricaoController {
 
 	@FXML
-	private TextField matricula;
+	private TextField fieldMatricula;
 	
 	@FXML
-	private TextField dataFim;
+	private TextField fieldDataFim;
 	
 	@FXML
-	private TextField motivo;
-	
-	@FXML
-	private Button adicionarRestricao;
-	
+	private TextField fieldMotivo;
 	
 	public void onBtAdicionarRestricao() {
-		//comandos para cadastrar restricao
-		Alerts.showAlert("Aviso", null, "Restri��o adicionada, o usu�rio n�o poder� fazer empr�stimos at� o dia ", AlertType.CONFIRMATION);
+		if (!validaCampos()) {
+			return;
+		}
+
+		GerenciadorRepositorio repos = Main.getGerenciadorRepositorio();
+		RepositorioUsuario repoUsuario = repos.getRepositorio(RepositorioUsuario.class);
+		RepositorioRestricao repoRestricao = repos.getRepositorio(RepositorioRestricao.class);
+
+		Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(fieldMatricula.getText()));
+
+		if (usuario == null) {
+			Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + fieldMatricula.getText(),
+				AlertType.ERROR);
+			return;
+		}
+
+		Alert confirma = new Alert(AlertType.CONFIRMATION);
+		confirma.setHeaderText("Você está prestes a cadastrar a seguinte restrição:");
+		confirma.setTitle("Confirme os dados.");
+
+		String sb =
+			"Restrição:" + "\n" +
+				"  Motivo: " + fieldMotivo.getText() + '\n' +
+				"  Data Término: " + fieldDataFim.getText() + '\n' +
+				"Usuário:" + "\n" +
+				"  Nome: " + usuario.getNome() + '\n' +
+				"  Matrícula: " + usuario.getMatricula() + '\n';
+		confirma.setContentText(sb);
+
+		Optional<ButtonType> respostaOpt = confirma.showAndWait();
+		if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
+			return;
+		}
+
+		Restricao restricao = new Restricao();
+		restricao.setMotivo(fieldMotivo.getText());
+		restricao.setDataInicio(LocalDate.now());
+		restricao.setDataFim(converterData(fieldDataFim.getText()));
+		restricao.setUsuario(usuario);
+
+		try {
+			repoRestricao.cadastrar(restricao);
+			Alerts.showAlert("Aviso", null, "Restrição adicionada!", AlertType.CONFIRMATION);
+			Utils.limpaCamposDinamicamente(this);
+		} catch (Exception ex) {
+			Alerts.showAlert("Erro", "Ocorreu um erro ao cadastrar a restrição:", ex.getMessage(), AlertType.ERROR);
+			ex.printStackTrace();
+		}
 	}
-	
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {		
+
+	private boolean validaCampos() {
+		try {
+			ValidadorCampo.valida(fieldMatricula, "Matrícula", Validadores.NAO_VAZIO, Validadores.NUMERO_LONG);
+			ValidadorCampo.valida(fieldMotivo, "Motivo", Validadores.NAO_VAZIO);
+			ValidadorCampo.valida(fieldDataFim, "Data Fim", Validadores.DATA);
+			return true;
+		} catch (RuntimeException ex) {
+			Alerts.showAlert("Aviso", null, ex.getMessage(), AlertType.WARNING);
+			return false;
+		}
+	}
+
+	private LocalDate converterData(String text) {
+		String[] partes = text.split("/");
+		return LocalDate.of(Integer.parseInt(partes[2]), Integer.parseInt(partes[1]), Integer.parseInt(partes[0]));
 	}
 
 }
