@@ -9,7 +9,7 @@ public interface RepositorioEmprestimo extends Repositorio<Emprestimo> {
 
   void marcarEmprestimoComoDevolvido(Emprestimo emprestimo);
   
-  List<Emprestimo> buscarEmprestimosAtivos(Usuario usuario);
+  List<Emprestimo> buscarEmprestimos(Usuario usuario);
   
   Emprestimo buscarEmprestimoAtivoPorExemplar(ExemplarLivro exemplar);
 }

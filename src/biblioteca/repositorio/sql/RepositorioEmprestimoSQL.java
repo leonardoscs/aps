@@ -93,7 +93,7 @@ public class RepositorioEmprestimoSQL implements RepositorioEmprestimo {
   }
 
   @Override
-  public List<Emprestimo> buscarEmprestimosAtivos(Usuario usuario) {
+  public List<Emprestimo> buscarEmprestimos(Usuario usuario) {
     List<Emprestimo> emprestimos = new ArrayList<>();
     String sql = 
         "SELECT id_emprestimo, id_exemplar, id_usuario, data_emprestou, " + 
