@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RemoverUsuarioController">
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RemoverUsuarioController">
    <children>
       <AnchorPane prefHeight="359.0" prefWidth="521.0">
          <children>
@@ -16,11 +16,9 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="26.0" layoutY="99.0" prefHeight="17.0" prefWidth="106.0" text="Remover por nome" />
-            <Label layoutX="19.0" layoutY="163.0" text="Remover por matricula" />
-            <TextField fx:id="nome" layoutX="140.0" layoutY="95.0" />
-            <TextField fx:id="matricula" layoutX="154.0" layoutY="159.0" />
-            <Button fx:id="remover" layoutX="203.0" layoutY="261.0" mnemonicParsing="false" onAction="#onBtRemover" text="Remover" />
+            <Label layoutX="36.0" layoutY="103.0" text="Matrícula" />
+            <TextField fx:id="fieldMatricula" layoutX="104.0" layoutY="101.0" />
+            <Button fx:id="remover" layoutX="36.0" layoutY="235.0" mnemonicParsing="false" onAction="#onBtRemover" text="Remover" />
          </children>
       </AnchorPane>
    </children>
