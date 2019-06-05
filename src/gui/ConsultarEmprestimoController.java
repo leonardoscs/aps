@@ -59,7 +59,7 @@ public class ConsultarEmprestimoController implements Initializable {
 		List<Emprestimo> emprestimos = repoEmp.buscarEmprestimos(usuario);
 
 		if (emprestimos.size() == 0) {
-			Alerts.showAlert("Aviso", null, "O usuário não possui nenhum emprestimo ativo.", Alert.AlertType.INFORMATION);
+			Alerts.showAlert("Aviso", null, "O usuário não possui nenhum emprestimo cadastrado.", Alert.AlertType.INFORMATION);
 			return;
 		}
 
