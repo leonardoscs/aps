@@ -17,83 +17,43 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 public class MainViewController implements Initializable{
-
-	@FXML
-	private MenuItem menuItemCadastarUsuario;
 	
-	@FXML
-	private MenuItem menuItemRemoverUsuario;
-	
-	@FXML
-	private MenuItem menuItemCadastrarLivro;
-	
-	@FXML
-	private MenuItem menuItemRemoverLivro;
-	
-	@FXML
-	private MenuItem menuItemAdicionarEmprestimo;
-	
-	@FXML
-	private MenuItem menuItemAbaterEmprestimo;
-	
-	@FXML
-	private MenuItem menuItemAdicionarRestricao;
-	
-	@FXML
-	private MenuItem menuItemRemoverRestricao;
-	
-	@FXML
-	private MenuItem menuItemConsultaDeLivros;
-
-	@FXML
-	private MenuItem menuItemConsultaDeEmprestimo;
-	
-	@FXML
 	public void onMenuItemCadastrarUsuario() {
 		loadView("/gui/CadastrarUsuarioView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemRemoverUsuario() {
 		loadView("/gui/RemoverUsuarioView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemCadastrarLivro() {
 		loadView("/gui/CadastrarLivroView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemRemoverLivro() {
 		loadView("/gui/RemoverLivroView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemAdicionarEmprestimo() {
 		loadView("/gui/AdicionarEmprestimoView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemAbaterEmprestimo() {
 		loadView("/gui/AbaterEmprestimoView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemAdicionarRestricao() {
 		loadView("/gui/AdicionarRestricaoView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemRemoverRestricao() {
 		loadView("/gui/RemoverRestricaoView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemConsultaDeLivro() {
 		loadView("/gui/ConsultarLivroView.fxml");
 	}
 	
-	@FXML
 	public void onMenuItemConsultaDeEmprestimo() {
 		loadView("/gui/ConsultarEmprestimoView.fxml");
 	}
