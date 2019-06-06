@@ -85,4 +85,20 @@ public class RepositorioCategoriaSQL implements RepositorioCategoria {
     }
     return categorias;
   }
+
+  @Override
+  public Categoria buscarPeloNome(String nome) {
+    try (PreparedStatement st = conn.prepareStatement("SELECT id_categoria, nome FROM categoria WHERE lower(nome) = lower(?)")) {
+      st.setString(1, nome);
+
+      ResultSet rs = st.executeQuery();
+
+      if (rs.next()) {
+        return new Categoria(rs.getInt("id_categoria"), rs.getString("nome"));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return null;
+  }
 }
