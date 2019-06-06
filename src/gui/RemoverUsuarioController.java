@@ -30,8 +30,8 @@ public class RemoverUsuarioController {
 		Usuario usuario = repoUsuario.buscarPelaMatricula(Long.parseLong(fieldMatricula.getText()));
 
 		if (usuario == null) {
-			Alerts.showAlert("Aviso", null, "Não existe um usuário com a matrícula: " + fieldMatricula.getText(),
-				AlertType.INFORMATION);
+			Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + fieldMatricula.getText(),
+				AlertType.ERROR);
 			return;
 		}
 
