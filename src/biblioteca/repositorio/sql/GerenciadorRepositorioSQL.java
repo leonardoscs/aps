@@ -7,11 +7,19 @@ import biblioteca.repositorio.*;
 
 public class GerenciadorRepositorioSQL extends GerenciadorRepositorio {
 
+  private String url;
+  private String senha;
+  private String usuario;
+
+  public GerenciadorRepositorioSQL(String url, String usuario, String senha) {
+    this.url = url;
+    this.senha = senha;
+    this.usuario = usuario;
+  }
+
   @Override
   public void inicializar() throws Exception {
-    // TODO: receber a conexão pelo constructor? sla
-    // TODO: adicionar opção para especificar url/senha/usuario do banco?
-    Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/biblioteca", "aps", "123");
+    Connection conn = DriverManager.getConnection(this.url, this.usuario, this.senha);
     
     RepositorioAutor repoAutor = new RepositorioAutorSQL(conn);
     RepositorioEditora repoEditora = new RepositorioEditoraSQL(conn);

@@ -49,7 +49,8 @@ public class Main extends Application {
     // TODO: quando a implementação em arquivo foi feita, terá que ter algo
     // para selecionar entre SQL e arquivo...
     // Por agora, apenas a implementação em SQL existe.
-    gerenciadorRepositorio = new GerenciadorRepositorioSQL();
+    gerenciadorRepositorio = new GerenciadorRepositorioSQL("jdbc:postgresql://localhost:5432/biblioteca",
+      "aps", "123");
     gerenciadorRepositorio.inicializar();
   }
   
