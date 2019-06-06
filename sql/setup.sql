@@ -2,7 +2,7 @@
 
 -- Deleta usuario aps e databases
 DROP DATABASE IF EXISTS biblioteca;
-DROP DATABASE IF EXISTS biblioteca_testes;
+-- DROP DATABASE IF EXISTS biblioteca_testes;
 
 DROP USER IF EXISTS aps;
 
@@ -18,8 +18,8 @@ ALTER ROLE aps CREATEDB;
 \! echo Criando database 'biblioteca'...
 CREATE DATABASE biblioteca;
 
-\! echo Criando database 'biblioteca_testes'...
-CREATE DATABASE biblioteca_testes;
+-- \! echo Criando database 'biblioteca_testes'...
+-- CREATE DATABASE biblioteca_testes;
 
 -- Conecta a database biblioteca
 \c biblioteca
