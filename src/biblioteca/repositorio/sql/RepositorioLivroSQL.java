@@ -143,11 +143,23 @@ public class RepositorioLivroSQL implements RepositorioLivro {
     // Restaura o autocommit (isso já faz o commit automaticamente)
     conn.setAutoCommit(true);
   }
-  
+
   @Override
   public void cadastrar(Livro livro) {
-    // TODO: fazer a verificação se tudo que está sendo inserido é valido.
-    // Por exemplo: verificar campos non null, verificar autores
+    boolean autoCommit;
+    try {
+      autoCommit = conn.getAutoCommit();
+    } catch (SQLException e) {
+      autoCommit = true; // True por padrão
+    }
+
+    // Desativa o auto commit
+    try {
+      conn.setAutoCommit(false);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
     try {
       cadastra(livro);
     } catch (SQLException ex) {
@@ -158,15 +170,75 @@ public class RepositorioLivroSQL implements RepositorioLivro {
       }
       throw new RuntimeException(ex);
     }
+
+    // Restaura o auto commit
+    try {
+      conn.setAutoCommit(autoCommit);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void deletar(int id) throws SQLException {
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro_autor WHERE id_livro = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro_categoria WHERE id_livro = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM emprestimo " +
+        "WHERE id_exemplar IN (SELECT id_exemplar FROM exemplar_livro WHERE id_livro = ?)")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM exemplar_livro WHERE id_livro = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro WHERE id_livro = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
   }
 
   @Override
   public void deletarPeloId(int id) {
-    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro WHERE id_livro = ?")) {
-      st.setInt(1, id);
-      st.executeUpdate();
+    boolean autoCommit;
+    try {
+      autoCommit = conn.getAutoCommit();
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      autoCommit = true; // True por padrão
+    }
+
+    // Desativa o auto commit
+    try {
+      conn.setAutoCommit(false);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      deletar(id);
+    } catch (SQLException ex) {
+      try {
+        conn.rollback();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      throw new RuntimeException(ex);
+    }
+
+    // Restaura o auto commit
+    try {
+      conn.setAutoCommit(autoCommit);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 
