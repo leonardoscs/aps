@@ -177,8 +177,8 @@ public class CadastrarLivroController {
     sb.append("Quantidade de Páginas: ").append(livro.getQuantidadePaginas()).append('\n');
     sb.append("Descrição: ").append('"').append(livro.getDescricao()).append('"').append('\n');
     sb.append("Editora: ").append(livro.getEditora().getNome()).append('\n');
-    sb.append("Autores: ").append(livro.getAutores().stream().map(Autor::getNome).collect(Collectors.joining(","))).append('\n');
-    sb.append("Categorias: ").append(livro.getCategorias().stream().map(Categoria::getNome).collect(Collectors.joining(","))).append('\n');
+    sb.append("Autores: ").append(livro.getAutores().stream().map(Autor::getNome).collect(Collectors.joining(", "))).append('\n');
+    sb.append("Categorias: ").append(livro.getCategorias().stream().map(Categoria::getNome).collect(Collectors.joining(", "))).append('\n');
     confirmaLivro.setContentText(sb.toString());
 
     ButtonType resposta = confirmaLivro.showAndWait().orElse(null);
