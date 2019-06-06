@@ -33,7 +33,10 @@ public class ConsultarLivroController implements Initializable {
 	
 	@FXML
 	private TableView<Livro> tabelaLivros;
-	
+
+	@FXML
+	private TableColumn<Livro, String> colCodLivro;
+
 	@FXML
   private TableColumn<Livro, String> colTitulo;
   
@@ -86,6 +89,7 @@ public class ConsultarLivroController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		colCodLivro.setCellValueFactory(f -> new ReadOnlyStringWrapper(Integer.toString(f.getValue().getId())));
 		colTitulo.setCellValueFactory(f -> new ReadOnlyStringWrapper(f.getValue().getTitulo()));
 		colLocalizacao.setCellValueFactory(f -> new ReadOnlyStringWrapper(f.getValue().getLocalizacao()));
 		colAutores.setCellValueFactory(f -> new ReadOnlyStringWrapper(

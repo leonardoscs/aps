@@ -23,11 +23,12 @@
             <Button layoutX="604.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBtnBuscar" prefHeight="22.0" prefWidth="78.0" text="Buscar" />
             <TableView fx:id="tabelaLivros" layoutX="22.0" layoutY="103.0" prefHeight="333.0" prefWidth="660.0">
               <columns>
-                <TableColumn fx:id="colTitulo" prefWidth="151.0" text="Título" />
-                <TableColumn fx:id="colLocalizacao" prefWidth="74.0" text="Localização" />
-                  <TableColumn fx:id="colEditora" prefWidth="136.0" text="Editora" />
-                  <TableColumn fx:id="colAutores" prefWidth="152.0" text="Autores" />
-                  <TableColumn fx:id="colCategorias" prefWidth="150.0" text="Categorias" />
+                  <TableColumn fx:id="colCodLivro" prefWidth="39.0" text="Cod." />
+                <TableColumn fx:id="colTitulo" prefWidth="135.0" text="Título" />
+                <TableColumn fx:id="colLocalizacao" prefWidth="113.0" text="Localização" />
+                  <TableColumn fx:id="colEditora" prefWidth="106.0" text="Editora" />
+                  <TableColumn fx:id="colAutores" minWidth="0.0" prefWidth="129.0" text="Autores" />
+                  <TableColumn fx:id="colCategorias" minWidth="0.0" prefWidth="136.0" text="Categorias" />
               </columns>
             </TableView>
             <TextField fx:id="fieldAutor" layoutX="262.0" layoutY="68.0" prefHeight="22.0" prefWidth="151.0" />
