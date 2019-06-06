@@ -109,5 +109,9 @@ ALTER TABLE livro_categoria
   ADD CONSTRAINT fk_livro_categoria_id_livro FOREIGN KEY (id_livro) REFERENCES livro (id_livro),
   ADD CONSTRAINT fk_livro_categoria_id_categoria FOREIGN KEY (id_categoria) REFERENCES categoria (id_categoria);
 
---ROLLBACK;
+CREATE INDEX indice_autor_nome ON autor (nome);
+CREATE INDEX indice_editora_nome ON editora (nome);
+CREATE INDEX indice_categoria_nome ON categoria (nome);
+CREATE INDEX indice_livro_titulo ON livro (titulo);
+
 COMMIT;
