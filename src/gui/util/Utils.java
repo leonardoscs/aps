@@ -33,7 +33,6 @@ public class Utils {
           f.setAccessible(true);
           return f.get(obj);
         } catch (IllegalAccessException e) {
-          e.printStackTrace();
           return null;
         }
       })
