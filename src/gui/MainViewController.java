@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import gui.util.Alerts;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -60,6 +61,10 @@ public class MainViewController implements Initializable{
 
 	public void onMenuItemCadastrarExemplar() {
 	  loadView("/gui/CadastrarExemplarView.fxml");
+	}
+
+	public void onMenuCadastrarTipoUsuario() {
+		loadView("/gui/CadastrarTipoUsuarioView.fxml");
 	}
 	
 	@Override

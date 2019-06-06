@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CadastrarTipoUsuarioController">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="700.0">
+         <children>
+             <Label layoutX="179.0" layoutY="14.0" text="Adicionar/Remover Tipos de Usuário">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="542.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBtnRemoverSelecionado" prefHeight="22.0" prefWidth="140.0" text="Remover Selecionado" />
+            <Button layoutX="359.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBtnAdicionar" prefHeight="22.0" prefWidth="166.0" text="Adicionar um novo tipo" />
+            <Label layoutX="17.0" layoutY="71.0" text="Tipos cadastrados:" />
+            <TableView fx:id="tabelaTipoUsuarios" layoutX="18.0" layoutY="108.0" prefHeight="314.0" prefWidth="665.0">
+              <columns>
+                <TableColumn fx:id="colDescricao" prefWidth="337.0" text="Descrição" />
+                <TableColumn fx:id="colQtdDias" prefWidth="327.0" text="Duração máxima do emprestimo" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+   </children>
+</VBox>
