@@ -37,6 +37,8 @@
             <TextField fx:id="fieldAutores" layoutX="427.0" layoutY="115.0" prefHeight="22.0" prefWidth="252.0" />
             <TextArea fx:id="fieldDescricao" layoutX="427.0" layoutY="160.0" prefHeight="172.0" prefWidth="252.0" />
             <Label layoutX="366.0" layoutY="158.0" text="Descrição" />
+            <Label layoutX="25.0" layoutY="242.0" text="Categorias" />
+            <TextField fx:id="fieldCategorias" layoutX="138.0" layoutY="238.0" prefHeight="22.0" prefWidth="193.0" />
          </children>
       </AnchorPane>
    </children>

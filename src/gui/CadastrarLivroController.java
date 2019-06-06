@@ -6,6 +6,7 @@ import biblioteca.entidades.Categoria;
 import biblioteca.entidades.Editora;
 import biblioteca.entidades.Livro;
 import biblioteca.repositorio.RepositorioAutor;
+import biblioteca.repositorio.RepositorioCategoria;
 import biblioteca.repositorio.RepositorioEditora;
 import biblioteca.repositorio.RepositorioLivro;
 import gui.util.Alerts;
@@ -19,15 +20,12 @@ import javafx.scene.control.Alert.AlertType;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CadastrarLivroController {
-	
-  // TODO: categorias...
-  
+
 	@FXML
 	private TextField fieldTitulo;
 	
@@ -47,7 +45,7 @@ public class CadastrarLivroController {
 	private TextField fieldEditora;
 	
 	@FXML
-	private TextField fieldCategoria;
+	private TextField fieldCategorias;
 
 	// TODO:
 	// Por enquanto isso será um TextField. Para adicionar mais de um autor
@@ -65,6 +63,7 @@ public class CadastrarLivroController {
       ValidadorCampo.valida(fieldQtdPaginas, "Número de Páginas", Validadores.NAO_VAZIO, Validadores.NUMERO_INT);
       ValidadorCampo.valida(fieldEditora, "Editora", Validadores.NAO_VAZIO);
       ValidadorCampo.valida(fieldAutores, "Autores", Validadores.NAO_VAZIO);
+      ValidadorCampo.valida(fieldCategorias, "Categorias", Validadores.NAO_VAZIO);
 
       return true;
     } catch (RuntimeException ex) {
@@ -72,16 +71,16 @@ public class CadastrarLivroController {
       return false;
     }
   }
-	
-	private List<Autor> buscaOuCriaAutores(String nomes) {
-	  RepositorioAutor repoAutor = Main.getGerenciadorRepositorio().getRepositorio(RepositorioAutor.class);
-	  
-	  List<Autor> autores = new ArrayList<>();
-	  String[] nomeAutores = nomes.split(",");
-  
+
+  private List<Autor> buscaOuCriaAutores(String nomes) {
+    RepositorioAutor repoAutor = Main.getGerenciadorRepositorio().getRepositorio(RepositorioAutor.class);
+
+    List<Autor> autores = new ArrayList<>();
+    String[] nomeAutores = nomes.split(",");
+
     for (String nomeAutor : nomeAutores) {
       nomeAutor = nomeAutor.trim(); // remove os espaços
-      
+
       // Busca pelo nome do autor. Caso não exista, mostra um dialog
       // para cadastrar um novo autor.
       Autor autor = repoAutor.buscarPeloNome(nomeAutor);
@@ -93,22 +92,56 @@ public class CadastrarLivroController {
         alert.getButtonTypes().clear();
         alert.getButtonTypes().add(ButtonType.YES);
         alert.getButtonTypes().add(ButtonType.NO);
-        
+
         Optional<ButtonType> respostaOpt = alert.showAndWait();
 
         // Se não respostar ou responder NÃO, o livro não será cadastrado.
         if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
           continue;
         }
-        
+
         autor = new Autor(nomeAutor);
         repoAutor.cadastrar(autor);
       }
       autores.add(autor);
     }
-    
+
     return autores;
-	}
+  }
+
+  private List<Categoria> buscaOuCriaCategorias(String nomes) {
+    RepositorioCategoria repoCat = Main.getGerenciadorRepositorio().getRepositorio(RepositorioCategoria.class);
+
+    List<Categoria> categorias = new ArrayList<>();
+    String[] nomesCategorias = nomes.split(",");
+
+    for (String nomeCategoria : nomesCategorias) {
+      nomeCategoria = nomeCategoria.trim(); // remove os espaços
+
+      Categoria categoria = repoCat.buscarPeloNome(nomeCategoria);
+      if (categoria == null) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Aviso");
+        alert.setHeaderText(null);
+        alert.setContentText(String.format("Não existe uma categoria chamada '%s'.\nDeseja cadastrar uma nova categoria com esse nome?", nomeCategoria));
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().add(ButtonType.YES);
+        alert.getButtonTypes().add(ButtonType.NO);
+
+        Optional<ButtonType> respostaOpt = alert.showAndWait();
+
+        if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+          continue;
+        }
+
+        categoria = new Categoria(nomeCategoria);
+        repoCat.cadastrar(categoria);
+      }
+      categorias.add(categoria);
+    }
+
+    return categorias;
+  }
 	
 	public void onBtCadastrar() {
 	  if (!validaCampos()) {
@@ -117,6 +150,7 @@ public class CadastrarLivroController {
 	  
 	  
 	  List<Autor> autores = buscaOuCriaAutores(fieldAutores.getText());
+    List<Categoria> categorias = buscaOuCriaCategorias(fieldCategorias.getText());
     Editora editora = buscaOuCriaEditora(fieldEditora.getText());
     
     // Se a editora é nula, significa que o usuário não a cadastrou
@@ -128,10 +162,10 @@ public class CadastrarLivroController {
     Livro livro = new Livro();
     livro.setEditora(editora);
     livro.setAutores(autores);
+    livro.setCategorias(categorias);
     livro.setTitulo(fieldTitulo.getText());
     livro.setDescricao(fieldDescricao.getText());
     livro.setQuantidadePaginas(Integer.parseInt(fieldQtdPaginas.getText()));
-    livro.setCategorias(Collections.emptyList()); // TODO
     livro.setLocalizacao(fieldLocalizacao.getText());
     livro.setDataPublicacao(converterData(fieldDataPublicacao.getText()));
     
