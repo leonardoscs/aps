@@ -36,7 +36,7 @@ CREATE TABLE usuario (
   tipo_usuario  INT NOT NULL, -- fk
   nome          VARCHAR(70) NOT NULl,
   telefone      VARCHAR(15) NOT NUll,
-  email         VARCHAR(100) NOT NULL UNIQUE, -- talvez possa ser nulo... ou talvez nem precise desse campo... sla
+  email         VARCHAR(100) NOT NULL UNIQUE,
   matricula     BIGINT NOT NULL UNIQUE
 );
 
