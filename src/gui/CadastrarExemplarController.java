@@ -69,7 +69,7 @@ public class CadastrarExemplarController implements Initializable {
 			tabelaExemplares.getItems().remove(tabelaExemplares.getSelectionModel().getSelectedIndex());
 		} catch(Exception ex) {
 			ex.printStackTrace();
-			Alerts.showAlert("Erro", "Ocorreu um erro ao adicionar o exemplar:", ex.getMessage(), Alert.AlertType.ERROR);
+			Alerts.showAlert("Erro", "Ocorreu um erro ao remover o exemplar:", ex.getMessage(), Alert.AlertType.ERROR);
 		}
 	}
 
