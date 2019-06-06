@@ -46,7 +46,6 @@ public class RepositorioLivroSQL implements RepositorioLivro {
     return null;
   }
 
-  // TODO: Talvez isso devesse ficar no RepositorioAutor?
   private List<Autor> pegarAutores(int idLivro) throws SQLException {
     String sql = 
         " SELECT                                     " +

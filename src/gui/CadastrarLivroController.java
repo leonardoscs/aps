@@ -47,10 +47,6 @@ public class CadastrarLivroController {
 	@FXML
 	private TextField fieldCategorias;
 
-	// TODO:
-	// Por enquanto isso será um TextField. Para adicionar mais de um autor
-	// será necessário separar os nomes por virgula...
-	// Se der tempo, dá pra mudar pra um botão de adicionar/selecionar ou algo assim...
 	@FXML
 	private TextField fieldAutores;
 

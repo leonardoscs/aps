@@ -7,7 +7,6 @@ public interface RepositorioEditora extends Repositorio<Editora> {
 
   List<Editora> buscarTodos();
 
-  // TODO: adicinar indice
   Editora buscarPeloNome(String nome);
 
 }
