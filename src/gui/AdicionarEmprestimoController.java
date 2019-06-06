@@ -7,11 +7,9 @@ import java.util.Optional;
 import application.Main;
 import biblioteca.entidades.Emprestimo;
 import biblioteca.entidades.ExemplarLivro;
+import biblioteca.entidades.Restricao;
 import biblioteca.entidades.Usuario;
-import biblioteca.repositorio.GerenciadorRepositorio;
-import biblioteca.repositorio.RepositorioEmprestimo;
-import biblioteca.repositorio.RepositorioExemplarLivro;
-import biblioteca.repositorio.RepositorioUsuario;
+import biblioteca.repositorio.*;
 import gui.util.Alerts;
 import gui.util.Utils;
 import gui.validador.ValidadorCampo;
@@ -44,6 +42,7 @@ public class AdicionarEmprestimoController {
       return;
     }
 
+    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     GerenciadorRepositorio repos = Main.getGerenciadorRepositorio();
     RepositorioUsuario repoUsuario = repos.getRepositorio(RepositorioUsuario.class);
     RepositorioExemplarLivro repoExemplar = repos.getRepositorio(RepositorioExemplarLivro.class);
@@ -55,6 +54,29 @@ public class AdicionarEmprestimoController {
       Alerts.showAlert("Erro", null, "Não existe um usuário com a matrícula: " + fieldMatricula.getText(),
         AlertType.ERROR);
       return;
+    }
+
+    // Checa restrição ativa
+    RepositorioRestricao repoRestricao = repos.getRepositorio(RepositorioRestricao.class);
+    Restricao restricao = repoRestricao.buscarRestricaoAtiva(usuario);
+    if (restricao != null) {
+      Alert confirma = new Alert(AlertType.WARNING);
+      confirma.setTitle("Aviso");
+      confirma.setHeaderText(String.format("O usuário '%s' possui uma restrição ativa!", usuario.getNome()));
+      confirma.setContentText(
+          "Motivo: " + restricao.getMotivo() + '\n' +
+          "Data Início: " + df.format(restricao.getDataInicio()) + '\n' +
+          "Data Fim: " + df.format(restricao.getDataFim()) + "\n\n" +
+          "Deseja adicionar o empréstimo mesmo assim?\n\n"
+      );
+      confirma.getButtonTypes().clear();
+      confirma.getButtonTypes().add(ButtonType.YES);
+      confirma.getButtonTypes().add(ButtonType.NO);
+
+      Optional<ButtonType> respostaOpt = confirma.showAndWait();
+      if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.YES) {
+        return;
+      }
     }
 
     ExemplarLivro exemplar = repoExemplar.buscarPeloId(Integer.parseInt(fieldCodExemplar.getText()));
@@ -72,7 +94,6 @@ public class AdicionarEmprestimoController {
       return;
     }
 
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     LocalDate dataDevolucao = LocalDate.now().plusDays(usuario.getTipo().getQuantidadeDiasEmprestimo());
 
     Alert confirmaLivro = new Alert(AlertType.CONFIRMATION);
