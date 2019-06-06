@@ -102,4 +102,23 @@ public class RepositorioAutorSQL implements RepositorioAutor {
     return null;
   }
 
+  @Override
+  public List<Autor> buscarPeloNomeParcial(String nome) {
+    String sql = "SELECT id_autor, nome FROM autor WHERE lower(nome) LIKE lower('%' || ? || '%')";
+    List<Autor> autores = new ArrayList<>();
+
+    try (PreparedStatement st = conn.prepareStatement(sql)) {
+      st.setString(1, nome);
+
+      ResultSet rs = st.executeQuery();
+
+      while (rs.next()) {
+        autores.add(new Autor(rs.getInt("id_autor"), rs.getString("nome")));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return autores;
+  }
+
 }
