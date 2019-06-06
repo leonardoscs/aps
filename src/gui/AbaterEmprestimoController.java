@@ -72,9 +72,9 @@ public class AbaterEmprestimoController {
     confirmaLivro.setContentText(sb.toString());
     
     // TODO: adicionar restricao caso tenha devolvido atrasado
-    
-    Optional<ButtonType> respostaOpt = confirmaLivro.showAndWait();
-    if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
+
+    ButtonType resposta = confirmaLivro.showAndWait().orElse(null);
+    if (resposta != ButtonType.OK) {
       return;
     }
     

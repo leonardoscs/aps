@@ -43,8 +43,8 @@ public class RemoverUsuarioController {
 		alert.getButtonTypes().add(ButtonType.YES);
 		alert.getButtonTypes().add(ButtonType.NO);
 
-		Optional<ButtonType> respostaOpt = alert.showAndWait();
-		if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+		ButtonType resposta = alert.showAndWait().orElse(null);
+		if (resposta != ButtonType.YES) {
 			return;
 		}
 

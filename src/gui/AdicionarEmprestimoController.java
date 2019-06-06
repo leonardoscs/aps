@@ -73,8 +73,8 @@ public class AdicionarEmprestimoController {
       confirma.getButtonTypes().add(ButtonType.YES);
       confirma.getButtonTypes().add(ButtonType.NO);
 
-      Optional<ButtonType> respostaOpt = confirma.showAndWait();
-      if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.YES) {
+      ButtonType resposta = confirma.showAndWait().orElse(null);
+      if (resposta != ButtonType.YES) {
         return;
       }
     }
@@ -96,19 +96,20 @@ public class AdicionarEmprestimoController {
 
     LocalDate dataDevolucao = LocalDate.now().plusDays(usuario.getTipo().getQuantidadeDiasEmprestimo());
 
-    Alert confirmaLivro = new Alert(AlertType.CONFIRMATION);
-    confirmaLivro.setHeaderText("Você está prestes a cadastrar o seguinte emprestimo:");
-    confirmaLivro.setTitle("Confirme os dados.");
+    Alert confirma = new Alert(AlertType.CONFIRMATION);
+    confirma.setHeaderText("Você está prestes a cadastrar o seguinte emprestimo:");
+    confirma.setTitle("Confirme os dados.");
 
-    String sb = "Usuário:" + "\n" +
+    String sb =
+      "Usuário:" + "\n" +
       "  Nome: " + usuario.getNome() + '\n' +
       "  Tipo: " + usuario.getTipo().getDescricao() + '\n' +
       "Titulo do livro: " + exemplar.getLivro().getTitulo() + '\n' +
       "Data limite para devolução: " + dataDevolucao.format(df) + '\n';
-    confirmaLivro.setContentText(sb);
+    confirma.setContentText(sb);
 
-    Optional<ButtonType> respostaOpt = confirmaLivro.showAndWait();
-    if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
+    ButtonType resposta = confirma.showAndWait().orElse(null);
+    if (resposta != ButtonType.OK) {
       return;
     }
 

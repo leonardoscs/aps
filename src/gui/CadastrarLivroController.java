@@ -93,10 +93,8 @@ public class CadastrarLivroController {
         alert.getButtonTypes().add(ButtonType.YES);
         alert.getButtonTypes().add(ButtonType.NO);
 
-        Optional<ButtonType> respostaOpt = alert.showAndWait();
-
-        // Se não respostar ou responder NÃO, o livro não será cadastrado.
-        if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+        ButtonType resposta = alert.showAndWait().orElse(null);
+        if (resposta != ButtonType.YES) {
           continue;
         }
 
@@ -128,9 +126,8 @@ public class CadastrarLivroController {
         alert.getButtonTypes().add(ButtonType.YES);
         alert.getButtonTypes().add(ButtonType.NO);
 
-        Optional<ButtonType> respostaOpt = alert.showAndWait();
-
-        if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+        ButtonType resposta = alert.showAndWait().orElse(null);
+        if (resposta != ButtonType.YES) {
           continue;
         }
 
@@ -183,9 +180,9 @@ public class CadastrarLivroController {
     sb.append("Autores: ").append(livro.getAutores().stream().map(Autor::getNome).collect(Collectors.joining(","))).append('\n');
     sb.append("Categorias: ").append(livro.getCategorias().stream().map(Categoria::getNome).collect(Collectors.joining(","))).append('\n');
     confirmaLivro.setContentText(sb.toString());
-    
-    Optional<ButtonType> respostaOpt = confirmaLivro.showAndWait();
-    if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
+
+    ButtonType resposta = confirmaLivro.showAndWait().orElse(null);
+    if (resposta != ButtonType.OK) {
       return;
     }
     
@@ -220,11 +217,9 @@ public class CadastrarLivroController {
       alert.getButtonTypes().clear();
       alert.getButtonTypes().add(ButtonType.YES);
       alert.getButtonTypes().add(ButtonType.NO);
-      
-      Optional<ButtonType> respostaOpt = alert.showAndWait();
 
-      // Se não responder ou responder NÃO, o livro não será cadastrado.
-      if (!respostaOpt.isPresent() || respostaOpt.get() == ButtonType.NO) {
+      ButtonType resposta = alert.showAndWait().orElse(null);
+      if (resposta != ButtonType.YES) {
         return null;
       }
       

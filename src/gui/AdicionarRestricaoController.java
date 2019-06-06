@@ -60,8 +60,8 @@ public class AdicionarRestricaoController {
 				"  Matrícula: " + usuario.getMatricula() + '\n';
 		confirma.setContentText(sb);
 
-		Optional<ButtonType> respostaOpt = confirma.showAndWait();
-		if (!respostaOpt.isPresent() || respostaOpt.get() != ButtonType.OK) {
+		ButtonType resposta = confirma.showAndWait().orElse(null);
+		if (resposta != ButtonType.OK) {
 			return;
 		}
 
