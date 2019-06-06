@@ -50,6 +50,8 @@ public class RemoverUsuarioController {
 
 		repoUsuario.deletarPeloId(usuario.getId());
 		Alerts.showAlert("Sucesso", null, "Usuário removido com sucesso", AlertType.INFORMATION);
+
+		fieldMatricula.setText("");
 	}
 
 	private boolean validaCampos() {
