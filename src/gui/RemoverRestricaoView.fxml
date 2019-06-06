@@ -11,16 +11,14 @@
    <children>
       <AnchorPane prefHeight="402.0" prefWidth="477.0">
          <children>
-            <Label layoutX="42.0" layoutY="30.0" text="Remover Restrição">
+            <Label layoutX="42.0" layoutY="30.0" text="Remover Restrição Ativa">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
             <Label layoutX="106.0" layoutY="125.0" text="Matricula do usuário:" />
-            <Label layoutX="52.0" layoutY="191.0" text="Motivo da retirada da restrição:" />
-            <TextField fx:id="matricula" layoutX="227.0" layoutY="121.0" />
-            <TextField fx:id="motivo" layoutX="227.0" layoutY="187.0" />
-            <Button fx:id="removerRestricao" layoutX="171.0" layoutY="299.0" mnemonicParsing="false" onAction="#onBtRemoverRestricao" text="Remover restrição" />
+            <TextField fx:id="fieldMatricula" layoutX="227.0" layoutY="121.0" />
+            <Button fx:id="removerRestricao" layoutX="171.0" layoutY="299.0" mnemonicParsing="false" onAction="#onBtRemoverRestricao" text="Remover restrição Ativa" />
          </children>
       </AnchorPane>
    </children>
