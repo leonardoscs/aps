@@ -1,5 +1,6 @@
 package application;
 
+import biblioteca.relatorio.RelatorioEmprestimosUsuarioSQL;
 import biblioteca.repositorio.GerenciadorRepositorio;
 import biblioteca.repositorio.sql.GerenciadorRepositorioSQL;
 import javafx.application.Application;
@@ -19,9 +20,9 @@ public class Main extends Application {
 
   // TODO: carregar de um arquivo?
   public static String urlBanco = "jdbc:postgresql://localhost:5432/biblioteca";
-  public static String senhaBanco = "aps";
-  public static String usuarioBanco = "123";
-  
+  public static String usuarioBanco = "aps";
+  public static String senhaBanco = "123";
+
   @Override
   public void start(Stage primaryStage) {
     try {
