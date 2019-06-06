@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import application.Main;
+import biblioteca.relatorio.RelatorioEmprestimosUsuarioSQL;
 import biblioteca.relatorio.RelatorioMaisEmprestadosSQL;
 import gui.util.Alerts;
 import javafx.event.ActionEvent;
@@ -102,7 +103,7 @@ public class MainViewController implements Initializable{
 		}
 	}
 
-  public void onMenuItemRelatorioMaisEmprestados() {
+	public void onMenuItemRelatorioMaisEmprestados() {
 		try {
 			Path dirRelatorios = Paths.get("./relatorios/");
 			if (Files.notExists(dirRelatorios)) {
@@ -123,5 +124,26 @@ public class MainViewController implements Initializable{
 			e.printStackTrace();
 			Alerts.showAlert("Erro", "Ocorreu um erro ao gerar o relatório:", e.getMessage(), AlertType.ERROR);
 		}
-  }
+	}
+
+	public void onMenuItemRelatorioEmprestimosPorUsuario() {
+		try {
+			Path dirRelatorios = Paths.get("./relatorios/");
+			if (Files.notExists(dirRelatorios)) {
+				Files.createDirectory(dirRelatorios);
+			}
+
+			File file = new File("./relatorios/emprestimos-por-usuario.txt");
+
+			Connection conn = DriverManager.getConnection(Main.urlBanco, Main.usuarioBanco, Main.senhaBanco);
+
+			RelatorioEmprestimosUsuarioSQL re = new RelatorioEmprestimosUsuarioSQL(conn);
+			re.gerarEmArquivo(file);
+			Alerts.showAlert("Sucesso", null, "Relatório salvo no arquivo: " + file.getPath(),
+				AlertType.INFORMATION);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Alerts.showAlert("Erro", "Ocorreu um erro ao gerar o relatório:", e.getMessage(), AlertType.ERROR);
+		}
+	}
 }

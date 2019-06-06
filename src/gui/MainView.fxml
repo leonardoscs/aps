@@ -47,6 +47,7 @@
                   <Menu mnemonicParsing="false" text="Relatorios">
                       <items>
                           <MenuItem mnemonicParsing="false" onAction="#onMenuItemRelatorioMaisEmprestados" text="Livros mais emprestados no último ano" />
+                          <MenuItem mnemonicParsing="false" onAction="#onMenuItemRelatorioEmprestimosPorUsuario" text="Informações de emprestimos de cada usuário" />
                       </items>
                   </Menu>
               </menus>
