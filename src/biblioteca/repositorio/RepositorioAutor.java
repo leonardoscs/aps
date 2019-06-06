@@ -10,4 +10,5 @@ public interface RepositorioAutor extends Repositorio<Autor> {
   Autor buscarPeloNome(String nome);
 
   List<Autor> buscarPeloNomeParcial(String nome);
+
 }

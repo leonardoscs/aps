@@ -12,5 +12,5 @@ public interface RepositorioEmprestimo extends Repositorio<Emprestimo> {
   List<Emprestimo> buscarEmprestimos(Usuario usuario);
   
   Emprestimo buscarEmprestimoAtivoPorExemplar(ExemplarLivro exemplar);
+
 }
-  

@@ -5,8 +5,7 @@ public class Autor {
   private int id;
   private String nome;
   
-  public Autor() {
-  }
+  public Autor() { }
   
   public Autor(String nome) {
     this.nome = nome;
