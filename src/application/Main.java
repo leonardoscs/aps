@@ -60,11 +60,7 @@ public class Main extends Application {
       alert.showAndWait();
 
       // Finaliza a aplicação
-      try {
-        System.exit(1);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      System.exit(1);
     }
   }
   
