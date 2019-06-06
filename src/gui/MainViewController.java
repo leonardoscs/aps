@@ -1,10 +1,18 @@
 package gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import application.Main;
+import biblioteca.relatorio.RelatorioMaisEmprestadosSQL;
 import gui.util.Alerts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -93,5 +101,27 @@ public class MainViewController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
+
+  public void onMenuItemRelatorioMaisEmprestados() {
+		try {
+			Path dirRelatorios = Paths.get("./relatorios/");
+			if (Files.notExists(dirRelatorios)) {
+				Files.createDirectory(dirRelatorios);
+			}
+
+			File file = new File("./relatorios/mais-emprestados-ultimo-ano.txt");
+
+			// Não gosto do fato disso (abrindo conexão com o banco e tals) estar sendo
+			// feito aqui, mas estamos sem tempo, então é o que tem pra hoje.
+			Connection conn = DriverManager.getConnection(Main.urlBanco, Main.usuarioBanco, Main.senhaBanco);
+
+			RelatorioMaisEmprestadosSQL re = new RelatorioMaisEmprestadosSQL(conn);
+			re.gerarEmArquivo(file);
+			Alerts.showAlert("Sucesso", null, "Relatório salvo no arquivo: " + file.getPath(),
+				AlertType.INFORMATION);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Alerts.showAlert("Erro", "Ocorreu um erro ao gerar o relatório:", e.getMessage(), AlertType.ERROR);
+		}
+  }
 }

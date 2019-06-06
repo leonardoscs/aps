@@ -1,7 +1,5 @@
 package application;
 
-import java.io.IOException;
-
 import biblioteca.repositorio.GerenciadorRepositorio;
 import biblioteca.repositorio.sql.GerenciadorRepositorioSQL;
 import javafx.application.Application;
@@ -12,10 +10,17 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
   
   private static Scene mainScene;
   private static GerenciadorRepositorio gerenciadorRepositorio;
+
+  // TODO: carregar de um arquivo?
+  public static String urlBanco = "jdbc:postgresql://localhost:5432/biblioteca";
+  public static String senhaBanco = "aps";
+  public static String usuarioBanco = "123";
   
   @Override
   public void start(Stage primaryStage) {
@@ -39,13 +44,12 @@ public class Main extends Application {
 
     inicializarGerenciadorRepositorio();
   }
-  
-  private void inicializarGerenciadorRepositorio(){
+
+  private void inicializarGerenciadorRepositorio() {
     // TODO: quando a implementação em arquivo foi feita, terá que ter algo
     // para selecionar entre SQL e arquivo...
     // Por agora, apenas a implementação em SQL existe.
-    gerenciadorRepositorio = new GerenciadorRepositorioSQL("jdbc:postgresql://localhost:5432/biblioteca",
-      "aps", "123");
+    gerenciadorRepositorio = new GerenciadorRepositorioSQL(urlBanco, usuarioBanco, senhaBanco);
 
     try {
       gerenciadorRepositorio.inicializar();

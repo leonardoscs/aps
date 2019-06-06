@@ -39,10 +39,15 @@
                      </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Consultas">
-                     <items>
-                        <MenuItem fx:id="menuItemConsultaDeLivros" mnemonicParsing="false" onAction="#onMenuItemConsultaDeLivro" text="Consulta de livros" />
-                        <MenuItem fx:id="menuItemConsultaDeEmprestimo" mnemonicParsing="false" onAction="#onMenuItemConsultaDeEmprestimo" text="Consulta de empréstimos" />
-                     </items>
+                      <items>
+                          <MenuItem fx:id="menuItemConsultaDeLivros" mnemonicParsing="false" onAction="#onMenuItemConsultaDeLivro" text="Consulta de livros" />
+                          <MenuItem fx:id="menuItemConsultaDeEmprestimo" mnemonicParsing="false" onAction="#onMenuItemConsultaDeEmprestimo" text="Consulta de empréstimos" />
+                      </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Relatorios">
+                      <items>
+                          <MenuItem mnemonicParsing="false" onAction="#onMenuItemRelatorioMaisEmprestados" text="Livros mais emprestados no último ano" />
+                      </items>
                   </Menu>
               </menus>
             </MenuBar>
