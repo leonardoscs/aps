@@ -3,9 +3,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Calendar;
 
-public class DateUtil {
+class DateUtil {
   
-  public static LocalDate convertDateToLocalDate(Date date) {
+  static LocalDate convertDateToLocalDate(Date date) {
     if (date == null) {
       return null;
     }
@@ -22,7 +22,7 @@ public class DateUtil {
     return LocalDate.of(year, month, dayOfMonth);
   }
   
-  public static Date convertLocalDateToDate(LocalDate localDate) {
+  static Date convertLocalDateToDate(LocalDate localDate) {
     if (localDate == null) {
       return null;
     }
