@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import biblioteca.repositorio.GerenciadorRepositorio;
 import biblioteca.repositorio.sql.GerenciadorRepositorioSQL;
-import gui.util.Alerts;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
@@ -37,21 +37,35 @@ public class Main extends Application {
       e.printStackTrace();
     }
 
-    try {
-      inicializarGerenciadorRepositorio();
-    } catch (Exception ex) {
-      Alerts.showAlert("Erro", "Não foi possível inicializar os repositórios.", ex.getMessage(), AlertType.ERROR);
-      ex.printStackTrace();
-    }
+    inicializarGerenciadorRepositorio();
   }
   
-  private void inicializarGerenciadorRepositorio() throws Exception {
+  private void inicializarGerenciadorRepositorio(){
     // TODO: quando a implementação em arquivo foi feita, terá que ter algo
     // para selecionar entre SQL e arquivo...
     // Por agora, apenas a implementação em SQL existe.
     gerenciadorRepositorio = new GerenciadorRepositorioSQL("jdbc:postgresql://localhost:5432/biblioteca",
       "aps", "123");
-    gerenciadorRepositorio.inicializar();
+
+    try {
+      gerenciadorRepositorio.inicializar();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Erro");
+      alert.setHeaderText("Não foi possível inicializar os repositórios.");
+      alert.setContentText(ex.getMessage());
+
+      alert.showAndWait();
+
+      // Finaliza a aplicação
+      try {
+        System.exit(1);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
   
   public static GerenciadorRepositorio getGerenciadorRepositorio() {
