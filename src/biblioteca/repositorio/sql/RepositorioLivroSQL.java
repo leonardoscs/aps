@@ -38,22 +38,7 @@ public class RepositorioLivroSQL implements RepositorioLivro {
       ResultSet rs = st.executeQuery();
       
       if (rs.next()) { // Livro existe
-        Editora editora = new Editora(rs.getInt("id_editora"), rs.getString("nome_editora"));
-
-        Livro livro = new Livro();
-        livro.setId(rs.getInt("id_livro"));
-        livro.setTitulo(rs.getString("titulo"));
-        livro.setDescricao(rs.getString("descricao"));
-        livro.setLocalizacao(rs.getString("localizacao"));
-        livro.setQuantidadePaginas(rs.getShort("qtd_paginas"));
-        livro.setDataPublicacao(DateUtil.convertDateToLocalDate(rs.getDate("data_publicacao")));;
-        livro.setEditora(editora);
-        
-        // TODO: ver se é possivel retornar autores e categorias numa mesma query
-        livro.setAutores(pegarAutores(id));
-        livro.setCategorias(pegarCategorias(id));
-        
-        return livro;
+        return livroFromResultSet(rs);
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
@@ -255,5 +240,78 @@ public class RepositorioLivroSQL implements RepositorioLivro {
       throw new RuntimeException();
     }
   }
- 
+
+  @Override
+  public List<Livro> buscarPeloTituloParcial(String titulo) {
+    String sql =
+      "SELECT livro.id_livro, titulo, descricao, qtd_paginas, data_publicacao, " +
+        "    localizacao, editora.nome as nome_editora, editora.id_editora " +
+        "    FROM livro " +
+        "    JOIN editora ON (livro.id_editora = editora.id_editora) " +
+        "    WHERE lower(titulo) LIKE lower('%' || ? || '%')";
+
+    List<Livro> resultados = new ArrayList<>();
+
+    try (PreparedStatement st = conn.prepareStatement(sql)) {
+      st.setString(1, titulo);
+
+      ResultSet rs = st.executeQuery();
+
+      while (rs.next()) {
+        Livro livro = livroFromResultSet(rs);
+        resultados.add(livro);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return resultados;
+  }
+
+  @Override
+  public List<Livro> buscarPeloAutor(Autor autor) {
+    String sql =
+      "SELECT livro.id_livro, titulo, descricao, qtd_paginas, data_publicacao, " +
+        "    localizacao, editora.nome as nome_editora, editora.id_editora " +
+        "    FROM livro " +
+        "    JOIN editora ON (livro.id_editora = editora.id_editora) " +
+        "    WHERE id_livro IN (select id_livro from livro_autor where id_autor = ?)";
+
+    List<Livro> resultados = new ArrayList<>();
+
+    try (PreparedStatement st = conn.prepareStatement(sql)) {
+      st.setInt(1, autor.getId());
+
+      ResultSet rs = st.executeQuery();
+
+      while (rs.next()) {
+        Livro livro = livroFromResultSet(rs);
+        resultados.add(livro);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return resultados;
+  }
+
+  // Método utilitário que cria um livro a partir do ResultSet
+  private Livro livroFromResultSet(ResultSet rs) throws SQLException {
+    int idLivro = rs.getInt("id_livro");
+
+    Editora editora = new Editora(rs.getInt("id_editora"), rs.getString("nome_editora"));
+
+    Livro livro = new Livro();
+    livro.setId(idLivro);
+    livro.setTitulo(rs.getString("titulo"));
+    livro.setDescricao(rs.getString("descricao"));
+    livro.setLocalizacao(rs.getString("localizacao"));
+    livro.setQuantidadePaginas(rs.getShort("qtd_paginas"));
+    livro.setDataPublicacao(DateUtil.convertDateToLocalDate(rs.getDate("data_publicacao")));;
+    livro.setEditora(editora);
+
+    livro.setAutores(pegarAutores(idLivro));
+    livro.setCategorias(pegarCategorias(idLivro));
+
+    return livro;
+  }
+
 }
