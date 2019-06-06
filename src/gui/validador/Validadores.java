@@ -61,7 +61,6 @@ public class Validadores {
     try {
       DateTimeFormatter.ofPattern("d/M/yyyy").parse(((TextField) controle).getText());
     } catch (DateTimeParseException e) {
-      e.printStackTrace();
       return "O campo " + nomeCampo + " não é uma data no formato: dia/mês/ano";
     }
 
