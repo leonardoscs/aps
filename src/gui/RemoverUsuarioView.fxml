@@ -18,7 +18,7 @@
             </Label>
             <Label layoutX="36.0" layoutY="103.0" text="Matrícula" />
             <TextField fx:id="fieldMatricula" layoutX="104.0" layoutY="101.0" />
-            <Button fx:id="remover" layoutX="36.0" layoutY="235.0" mnemonicParsing="false" onAction="#onBtRemover" text="Remover" />
+            <Button fx:id="remover" layoutX="36.0" layoutY="169.0" mnemonicParsing="false" onAction="#onBtRemover" text="Remover" />
          </children>
       </AnchorPane>
    </children>

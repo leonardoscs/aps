@@ -16,9 +16,9 @@
                   <Font name="System Bold" size="29.0" />
                </font>
             </Label>
-            <Label layoutX="37.0" layoutY="190.0" text="Código do exemplar:" />
-            <TextField fx:id="fieldCodExemplar" layoutX="153.0" layoutY="186.0" />
-            <Button fx:id="abaterEmprestimo" layoutX="218.0" layoutY="297.0" mnemonicParsing="false" onAction="#onBtAbaterEmprestimo" text="Abater empréstimo" />
+            <Label layoutX="37.0" layoutY="140.0" text="Código do exemplar:" />
+            <TextField fx:id="fieldCodExemplar" layoutX="160.0" layoutY="138.0" />
+            <Button fx:id="abaterEmprestimo" layoutX="37.0" layoutY="217.0" mnemonicParsing="false" onAction="#onBtAbaterEmprestimo" text="Abater empréstimo" />
          </children>
       </AnchorPane>
    </children>
