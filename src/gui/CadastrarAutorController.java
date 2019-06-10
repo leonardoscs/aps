@@ -38,11 +38,7 @@ public class CadastrarAutorController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		nomeCol.setCellValueFactory(f -> new ReadOnlyStringWrapper(f.getValue().getNome()));
 
-		RepositorioAutor repoAutor = Main.getGerenciadorRepositorio().getRepositorio(RepositorioAutor.class);
-
-		autoresCarregados = repoAutor.buscarTodos();
-
-		tabelaAutores.setItems(FXCollections.observableList(autoresCarregados));
+		atualizaTabela();
 	}
 
 	public void onBtnRemoverSelecionado() {
@@ -75,7 +71,6 @@ public class CadastrarAutorController implements Initializable {
 			Alerts.showAlert("Successo", null, "Autor removido com sucesso!",
 				Alert.AlertType.INFORMATION);
 
-			// Atualiza lista de exemplares
 			tabelaAutores.getItems().remove(tabelaAutores.getSelectionModel().getSelectedIndex());
 		} catch(Exception ex) {
 			ex.printStackTrace();
@@ -113,8 +108,7 @@ public class CadastrarAutorController implements Initializable {
 			Alerts.showAlert("Successo", null, "Autor cadastrado com sucesso!",
 				Alert.AlertType.INFORMATION);
 
-			// Atualiza lista de exemplares
-			tabelaAutores.setItems(FXCollections.observableList(repoAutor.buscarTodos()));
+			atualizaTabela();
 		} catch(Exception ex) {
 			ex.printStackTrace();
 			Alerts.showAlert("Erro", "Ocorreu um erro ao adicionar o autor:", ex.getMessage(), Alert.AlertType.ERROR);
@@ -123,7 +117,7 @@ public class CadastrarAutorController implements Initializable {
 
 	public void onBtnFiltrar() {
 		if (inputNomeFiltro.getText().isEmpty()) {
-			Alerts.showAlert("Aviso", null, "Digite algo no campo 'nome'", Alert.AlertType.WARNING);
+			tabelaAutores.setItems(FXCollections.observableList(autoresCarregados));
 			return;
 		}
 
@@ -139,5 +133,13 @@ public class CadastrarAutorController implements Initializable {
 			.collect(Collectors.toList());
 
 		tabelaAutores.setItems(FXCollections.observableList(filtrado));
+	}
+
+	private void atualizaTabela() {
+		RepositorioAutor repoAutor = Main.getGerenciadorRepositorio().getRepositorio(RepositorioAutor.class);
+
+		autoresCarregados = repoAutor.buscarTodos();
+
+		tabelaAutores.setItems(FXCollections.observableList(autoresCarregados));
 	}
 }

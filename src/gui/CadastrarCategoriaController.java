@@ -69,7 +69,6 @@ public class CadastrarCategoriaController implements Initializable {
 			Alerts.showAlert("Successo", null, "Categoria removida com sucesso!",
 				Alert.AlertType.INFORMATION);
 
-			// Atualiza lista de exemplares
 			tabelaCategorias.getItems().remove(tabelaCategorias.getSelectionModel().getSelectedIndex());
 		} catch(Exception ex) {
 			ex.printStackTrace();
@@ -107,7 +106,6 @@ public class CadastrarCategoriaController implements Initializable {
 			Alerts.showAlert("Successo", null, "Categoria cadastrada com sucesso!",
 				Alert.AlertType.INFORMATION);
 
-			// Atualiza lista de exemplares
 			tabelaCategorias.setItems(FXCollections.observableList(repoCategoria.buscarTodas()));
 		} catch(Exception ex) {
 			ex.printStackTrace();
