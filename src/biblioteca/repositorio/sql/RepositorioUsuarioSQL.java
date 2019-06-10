@@ -83,13 +83,61 @@ public class RepositorioUsuarioSQL implements RepositorioUsuario {
     }
   }
 
-  @Override
-  public void deletarPeloId(int id) {
-    try (PreparedStatement st = conn.prepareStatement("DELETE FROM usuario WHERE id_usuario = ?")) { //  RETURNING id_autor, nome;
+  private void deletar(int id) throws SQLException {
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM emprestimo WHERE id_usuario = ?")) {
       st.setInt(1, id);
       st.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException(e);
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM restricao WHERE id_usuario = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM usuario WHERE id_usuario = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public void deletarPeloId(int id) {
+    boolean autoCommit;
+    try {
+      autoCommit = conn.getAutoCommit();
+    } catch (SQLException e) {
+      autoCommit = true; // True por padrão
+    }
+
+    // Desativa o auto commit
+    try {
+      conn.setAutoCommit(false);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      deletar(id);
+    } catch (SQLException ex) {
+      try {
+        conn.rollback();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      throw new RuntimeException(ex);
+    }
+
+    // Restaura o auto commit
+    try {
+      conn.setAutoCommit(autoCommit);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
   
