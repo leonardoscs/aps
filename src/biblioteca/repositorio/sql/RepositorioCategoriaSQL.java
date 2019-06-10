@@ -49,6 +49,13 @@ public class RepositorioCategoriaSQL implements RepositorioCategoria {
 
   @Override
   public void deletarPeloId(int id) {
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro_categoria WHERE id_categoria = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
     try (PreparedStatement st = conn.prepareStatement("DELETE FROM categoria WHERE id_categoria = ?")) {
       st.setInt(1, id);
       st.executeUpdate();

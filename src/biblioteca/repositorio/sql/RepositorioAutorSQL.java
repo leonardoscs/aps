@@ -50,7 +50,14 @@ public class RepositorioAutorSQL implements RepositorioAutor {
 
   @Override
   public void deletarPeloId(int id) {
-    try (PreparedStatement st = conn.prepareStatement("DELETE FROM autor WHERE id_autor = ?")) { //  RETURNING id_autor, nome;
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro_autor WHERE id_autor = ?")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM autor WHERE id_autor = ?")) {
       st.setInt(1, id);
       st.executeUpdate();
     } catch (SQLException e) {
