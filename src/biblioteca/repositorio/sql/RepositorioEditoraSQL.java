@@ -47,13 +47,75 @@ public class RepositorioEditoraSQL implements RepositorioEditora {
     }
   }
 
-  @Override
-  public void deletarPeloId(int id) {
+  private void deletar(int id) throws SQLException {
+    String livrosDaEditoraSQL = "SELECT id_livro FROM livro WHERE id_editora = ?";
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro_autor WHERE id_livro IN ("+livrosDaEditoraSQL+")")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro_categoria WHERE id_livro IN ("+livrosDaEditoraSQL+")")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM emprestimo " +
+      "WHERE id_exemplar IN (SELECT id_exemplar FROM exemplar_livro WHERE id_livro IN ("+livrosDaEditoraSQL+"))")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM exemplar_livro WHERE id_livro IN ("+livrosDaEditoraSQL+")")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
+    try (PreparedStatement st = conn.prepareStatement("DELETE FROM livro WHERE id_livro IN ("+livrosDaEditoraSQL+")")) {
+      st.setInt(1, id);
+      st.executeUpdate();
+    }
+
     try (PreparedStatement st = conn.prepareStatement("DELETE FROM editora WHERE id_editora = ?")) {
       st.setInt(1, id);
       st.executeUpdate();
     } catch (SQLException e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public void deletarPeloId(int id) {
+    boolean autoCommit;
+    try {
+      autoCommit = conn.getAutoCommit();
+    } catch (SQLException e) {
+      autoCommit = true; // True por padrão
+    }
+
+    // Desativa o auto commit
+    try {
+      conn.setAutoCommit(false);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      deletar(id);
+    } catch (SQLException ex) {
+      try {
+        conn.rollback();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+      throw new RuntimeException(ex);
+    }
+
+    // Restaura o auto commit
+    try {
+      conn.setAutoCommit(autoCommit);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
   
