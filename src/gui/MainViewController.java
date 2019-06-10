@@ -158,4 +158,8 @@ public class MainViewController implements Initializable{
 	public void onMenuItemCadastrarCategoria() {
 		loadView("/gui/CadastrarCategoriaView.fxml");
 	}
+
+	public void onMenuItemCadastrarEditora() {
+		loadView("/gui/CadastrarEditoraView.fxml");
+	}
 }

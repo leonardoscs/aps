@@ -24,8 +24,9 @@
                       <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarLivro" text="Adicionar livro" />
                       <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarExemplar" text="Adicionar exemplar" />
                       <MenuItem mnemonicParsing="false" onAction="#onMenuItemRemoverLivro" text="Remover livro" />
-                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarAutor" text="Cadastrar autor" />
-                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarCategoria" text="Cadastrar categoria" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarAutor" text="Adicionar/Remover autor" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarCategoria" text="Adicionar/Remover categoria" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarEditora" text="Adicionar/Remover editora" />
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Empréstimo">
