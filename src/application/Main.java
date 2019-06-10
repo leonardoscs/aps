@@ -50,12 +50,21 @@ public class Main extends Application {
     // TODO: quando a implementação em arquivo foi feita, terá que ter algo
     // para selecionar entre SQL e arquivo...
     // Por agora, apenas a implementação em SQL existe.
+
+    Alert alertInicializando = new Alert(AlertType.INFORMATION);
+    alertInicializando.setTitle("Informação");
+    alertInicializando.setHeaderText(null);
+    alertInicializando.setContentText("Inicializando conexão com o banco de dados...");
+    alertInicializando.show();
+
     gerenciadorRepositorio = new GerenciadorRepositorioSQL(urlBanco, usuarioBanco, senhaBanco);
 
     try {
       gerenciadorRepositorio.inicializar();
+      alertInicializando.hide();
     } catch (Exception ex) {
       ex.printStackTrace();
+      alertInicializando.hide();
 
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Erro");
