@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CadastrarAutorController">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="700.0">
+         <children>
+             <Label layoutX="179.0" layoutY="14.0" text="Adicionar/Remover Autores">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button layoutX="542.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBtnRemoverSelecionado" prefHeight="22.0" prefWidth="140.0" text="Remover Selecionado" />
+            <TableView fx:id="tabelaAutores" layoutX="22.0" layoutY="103.0" prefHeight="333.0" prefWidth="660.0">
+              <columns>
+                <TableColumn fx:id="nomeCol" prefWidth="659.0" text="Nome" />
+              </columns>
+            </TableView>
+            <Button layoutX="437.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBtnAdicionar" prefHeight="22.0" prefWidth="96.0" text="Adicionar" />
+            <Label layoutX="22.0" layoutY="71.0" text="Nome:" />
+            <TextField fx:id="inputNomeFiltro" layoutX="66.0" layoutY="69.0" />
+            <Button layoutX="218.0" layoutY="69.0" mnemonicParsing="false" onAction="#onBtnFiltrar" text="Filtrar" />
+         </children></AnchorPane>
+   </children>
+</VBox>
