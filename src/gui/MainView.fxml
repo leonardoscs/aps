@@ -21,9 +21,11 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="Livros">
                     <items>
-                      <MenuItem fx:id="menuItemCadastrarLivro" mnemonicParsing="false" onAction="#onMenuItemCadastrarLivro" text="Adicionar livro" />
-                      <MenuItem fx:id="menuItemCadastrarExemplar" mnemonicParsing="false" onAction="#onMenuItemCadastrarExemplar" text="Adicionar exemplar" />
-                        <MenuItem fx:id="menuItemRemoverLivro" mnemonicParsing="false" onAction="#onMenuItemRemoverLivro" text="Remover livro" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarLivro" text="Adicionar livro" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarExemplar" text="Adicionar exemplar" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemRemoverLivro" text="Remover livro" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarAutor" text="Cadastrar autor" />
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemCadastrarCategoria" text="Cadastrar categoria" />
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Empréstimo">

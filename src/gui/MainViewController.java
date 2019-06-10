@@ -9,11 +9,16 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
+import biblioteca.entidades.Autor;
+import biblioteca.entidades.Categoria;
 import biblioteca.relatorio.RelatorioEmprestimosUsuarioSQL;
 import biblioteca.relatorio.RelatorioMaisEmprestadosSQL;
+import biblioteca.repositorio.RepositorioAutor;
+import biblioteca.repositorio.RepositorioCategoria;
 import gui.util.Alerts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,9 +26,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 public class MainViewController implements Initializable{
@@ -145,5 +149,13 @@ public class MainViewController implements Initializable{
 			e.printStackTrace();
 			Alerts.showAlert("Erro", "Ocorreu um erro ao gerar o relatório:", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+  public void onMenuItemCadastrarAutor() {
+		loadView("/gui/CadastrarAutorView.fxml");
+	}
+
+	public void onMenuItemCadastrarCategoria() {
+		loadView("/gui/CadastrarCategoriaView.fxml");
 	}
 }
