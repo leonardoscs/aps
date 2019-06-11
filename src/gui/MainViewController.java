@@ -17,8 +17,7 @@ import biblioteca.entidades.Autor;
 import biblioteca.entidades.Categoria;
 import biblioteca.relatorio.RelatorioEmprestimosUsuarioSQL;
 import biblioteca.relatorio.RelatorioMaisEmprestadosSQL;
-import biblioteca.repositorio.RepositorioAutor;
-import biblioteca.repositorio.RepositorioCategoria;
+import biblioteca.repositorio.*;
 import gui.util.Alerts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,8 +29,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
-public class MainViewController implements Initializable{
-	
+public class MainViewController implements Initializable {
+
+	@FXML
+	private Label labelNumUsuarios;
+
+	@FXML
+	private Label labelNumLivros;
+
+	@FXML
+	private Label labelNumExemplares;
+
+	@FXML
+	private Label labelNumEmprestimos;
+
 	public void onMenuItemCadastrarUsuario() {
 		loadView("/gui/CadastrarUsuarioView.fxml");
 	}
@@ -82,7 +93,20 @@ public class MainViewController implements Initializable{
 	
 	@Override
 	public void initialize(URL uri, ResourceBundle rb) {
-		
+		RepositorioUsuario repoUsuario = Main.getGerenciadorRepositorio().getRepositorio(RepositorioUsuario.class);
+		RepositorioEmprestimo repoEmprestimo = Main.getGerenciadorRepositorio().getRepositorio(RepositorioEmprestimo.class);
+		RepositorioLivro repoLivro = Main.getGerenciadorRepositorio().getRepositorio(RepositorioLivro.class);
+		RepositorioExemplarLivro repoExemplar = Main.getGerenciadorRepositorio().getRepositorio(RepositorioExemplarLivro.class);
+
+		int qtdUsuarios = repoUsuario.calcularQuantidadeDeUsuariosCadastrados();
+		int qtdEmprestimos = repoEmprestimo.calcularQuantidadeDeEmprestimosCadastrados();
+		int qtdLivros = repoLivro.calcularQuantidadeDeLivrosCadastrados();
+		int qtdExemplares = repoExemplar.calcularQuantidadeDeExemplaresCadastrados();
+
+		labelNumUsuarios.setText(Integer.toString(qtdUsuarios));
+		labelNumEmprestimos.setText(Integer.toString(qtdEmprestimos));
+		labelNumLivros.setText(Integer.toString(qtdLivros));
+		labelNumExemplares.setText(Integer.toString(qtdExemplares));
 	}
 	
 	private synchronized void loadView(String caminhoDaView) {

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <content>
-      <VBox prefHeight="319.0" prefWidth="481.0">
+      <VBox prefHeight="500.0" prefWidth="700.0">
          <children>
             <MenuBar>
               <menus>
@@ -55,6 +58,60 @@
                   </Menu>
               </menus>
             </MenuBar>
+            <AnchorPane prefHeight="476.0" prefWidth="700.0">
+               <children>
+                  <Label layoutX="242.0" layoutY="33.0" text="Seja bem-vindo!">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="26.0" layoutY="157.0" text="Algumas informações:">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="193.0" text="Número de usuários cadastrados:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="218.0" text="Número de livros cadastrados:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="243.0" text="Número de exemplares cadastrados:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="268.0" text="Número de empréstimos cadastrados:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelNumUsuarios" layoutX="242.0" layoutY="193.0" prefHeight="20.0" prefWidth="85.0" text="...">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelNumLivros" layoutX="223.0" layoutY="218.0" prefHeight="20.0" prefWidth="85.0" text="...">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelNumExemplares" layoutX="263.0" layoutY="243.0" prefHeight="20.0" prefWidth="85.0" text="...">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelNumEmprestimos" layoutX="273.0" layoutY="268.0" prefHeight="20.0" prefWidth="85.0" text="...">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </content>

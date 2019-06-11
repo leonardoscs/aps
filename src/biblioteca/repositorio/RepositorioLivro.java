@@ -18,4 +18,5 @@ public interface RepositorioLivro extends Repositorio<Livro> {
 
   List<Livro> buscarPeloAutor(Autor autor);
 
+  int calcularQuantidadeDeLivrosCadastrados();
 }

@@ -8,4 +8,5 @@ public interface RepositorioExemplarLivro extends Repositorio<ExemplarLivro> {
 
   List<ExemplarLivro> buscarExemplares(Livro livro);
 
+  int calcularQuantidadeDeExemplaresCadastrados();
 }

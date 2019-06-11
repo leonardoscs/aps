@@ -5,4 +5,5 @@ public interface RepositorioUsuario extends Repositorio<Usuario> {
 
   Usuario buscarPelaMatricula(long matricula);
 
+  int calcularQuantidadeDeUsuariosCadastrados();
 }

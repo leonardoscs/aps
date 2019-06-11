@@ -13,4 +13,6 @@ public interface RepositorioEmprestimo extends Repositorio<Emprestimo> {
   
   Emprestimo buscarEmprestimoAtivoPorExemplar(ExemplarLivro exemplar);
 
+  int calcularQuantidadeDeEmprestimosCadastrados();
+
 }

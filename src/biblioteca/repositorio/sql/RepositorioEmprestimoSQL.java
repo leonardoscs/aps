@@ -148,4 +148,17 @@ public class RepositorioEmprestimoSQL implements RepositorioEmprestimo {
     return null;
   }
 
+  @Override
+  public int calcularQuantidadeDeEmprestimosCadastrados() {
+    try (PreparedStatement st = conn.prepareStatement("SELECT count(*) as qtd FROM emprestimo")) {
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("qtd");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return 0;
+  }
+
 }

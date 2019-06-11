@@ -385,4 +385,17 @@ public class RepositorioLivroSQL implements RepositorioLivro {
     return livro;
   }
 
+  @Override
+  public int calcularQuantidadeDeLivrosCadastrados() {
+    try (PreparedStatement st = conn.prepareStatement("SELECT count(*) as qtd FROM livro")) {
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("qtd");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return 0;
+  }
+
 }

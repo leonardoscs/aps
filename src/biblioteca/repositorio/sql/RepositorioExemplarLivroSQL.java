@@ -110,5 +110,18 @@ public class RepositorioExemplarLivroSQL implements RepositorioExemplarLivro {
       throw new RuntimeException(e);
     }
   }
+
+  @Override
+  public int calcularQuantidadeDeExemplaresCadastrados() {
+    try (PreparedStatement st = conn.prepareStatement("SELECT count(*) as qtd FROM exemplar_livro")) {
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("qtd");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return 0;
+  }
   
 }
